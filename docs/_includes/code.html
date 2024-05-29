@@ -1,0 +1,18 @@
+{% raw %}
+{% capture code %}
+{{ include.code | remove_first: ' ' | replace: '&amp;', '&' | replace: '&lt;', '<' | replace: '&gt;', '>' }}
+{% endcapture %}
+
+{% if page.highlighter == 'rouge' %}
+{% assign lexer = include.lang | default: 'plaintext' %}
+{% assign formatter = 'html' %}
+{% assign code = code | highlight: lexer, formatter %}
+{% else %}
+{% assign lexer = include.lang | default: 'python' %}
+{% assign code = code | highlight: lexer %}
+{% endif %}
+
+<div class="code-block">
+  {{ code }}
+</div>
+{% endraw %}
