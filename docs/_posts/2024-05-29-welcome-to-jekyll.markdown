@@ -145,6 +145,8 @@ In this case, all memory requirements proportional to `batch_size` decreases by 
 
 The following chart shows the memory profile of the training loop on two batches of data (`2*gradient_accumulation_steps` steps)
 
+![The memory profile of the training loop on two batches of data](/assets/images/Optimising_the_Training_Loop/2.png)
+
 We can see that the peak memory usage for the model is close to 1.11 Gb.
 
 The model has 3,024,384 parameters and we operate in 32 bit (4 byte) floating point numbers. Which means the model parameters (shown as green in the chart) should occupy about 3,000,000 * 4 bytes which is approximately 12 Mb. The gradients (shown as royal blue in the chart) should occupy similar memory since gradients stores one number per parameter too. The calculated numbers correspond well with the chart above.
@@ -226,6 +228,8 @@ Following chart shows the memory profile of the same model and hyper parameters 
 
 Note that we reduced the model’s peak memory reserved by half while increasing the compute time by merely 25% (two batches in this case took 1000 ms compared to 800 ms without gradient checkpointing). With an appropriately designed [checkpointing strategy](https://github.com/cybertronai/gradient-checkpointing), you could fit 10x larger model for less than 50% processing time increase.
 
+![The memory profile with gradient checkpointing](/assets/images/Optimising_the_Training_Loop/3.png)
+
 PyTorch does provide an [API](https://pytorch.org/docs/stable/checkpoint.html) to use gradient checkpointing in your model (which was used to produce this chart). But using it is not as straightforward unless you have a simple sequential model. For example, if your model uses a dropout layer, a checkpoint needs to be set immediately before and after the dropout layer since dropout will mask different random inputs on every forward pass. Similarly, with batch normalisation layer, each forward pass will update the batch normalisation mean and standard deviation parameters. Therefore, performing extra forward passes for computing gradients can lead to hard to debug quality degradations.
 
 Since the model used in this case involves dropout and layer normalisation, the strategy used in this chart (to checkpoint each transformer block) will lead to incorrect training. The checkpointing strategy shown here is just meant to demonstrate the effectiveness of its compute-memory trade off. Appropriate strategy must be manually designed based on the model architecture.
@@ -236,9 +240,13 @@ If you observe the profile charts till now, you can see that there is a long gap
 
 To understand that, we can look at the chrome trace of one micro batch iteration marked by ProfilerStep#6.
 
+![Chrome trace of one micro batch](/assets/images/Optimising_the_Training_Loop/4.png)
+
 From the trace, we can see that a significant time is spent copying a tensor (loss value tensor in this case) back to the CPU. The statement `print(f”Loss: {loss.item()}”)` causes copying of loss tensor from GPU to CPU and the program waits till the copy is finished. So the first thing we should target is removing statements that explicitly cause copying of tensors between devices - like print statements and writing scalars to tensorboard within the micro  batch loop. 
 
 But note that in the same chart, copying micro batches from CPU to GPU does not seem to take much time. In above chart, it happens in the very narrow gap between where ProfilerStep#5 ends and where forward pass of ProfilerStep#6 starts. The situation is a bit more nuanced than what the chart shows. Here is the same profiler step after removing the print statements. We can now see that while the gap post backward pass of ProfilerStep#6 has disappeared, a modest gap for `tensor.to(device)` (specifically cudaStreamSynchronise) has appeared before the forward pass of of ProfilerStep#6 (the forward pass needs the input tensor before executing). To understand why it did not show up in the previous chart needs a more detailed understanding of CUDA streams and tensor copy within CUDA. This [blog article](https://developer.nvidia.com/blog/how-overlap-data-transfers-cuda-cc/) by Nvidia explains it well.
+
+![Chrome trace of one micro batch](/assets/images/Optimising_the_Training_Loop/5.png)
 
 As a rule of thumb, I/O operations are usually much slower than compute. They are also independent in the sense that a computer can perform those parallely with instruction executions. 
 
@@ -295,6 +303,8 @@ for epoch in range(num_epochs):
 
 If compute and I/O take similar time, the runtime could be reduced by a significant factor with such a procedure. Here is the performance profile after the above asynchronous copy modifications. The execution time has dropped by more than 25%! Memory consumption does not change.
 
+![The execution time has dropped by more than 25 percent](/assets/images/Optimising_the_Training_Loop/6.png)
+
 Although we used an LLM as reference model, the optimizations involved till now were applied to the training loop and made no specific assumptions about the model architecture. All of those techniques could be used with any deep learning model. 
 
 Also note that all above optimisations were independent and can be combined to gain significant speed ups and memory efficiency. An optimised training loop for large models training on a single GPU will often combine -
@@ -316,6 +326,8 @@ model = torch.compile(model)
 
 Two iterations of training loop with this one line change took approximately 400 ms.
 
+![Two iterations of training loop with this one line change took approximately 400 ms.](/assets/images/Optimising_the_Training_Loop/7.png)
+
 And here is a modification to that one line that will further drop it by almost 75%! 
 
 {% highlight python %}
@@ -323,6 +335,8 @@ model = torch.compile(model, mode="max-autotune")
 {% endhighlight %}
 
 At this stage, the profile graph looks really weird and does not offer much information apart from the fact that the training loop on the same two batches took less than 120 ms!
+
+![Compiling in max autotune mode](/assets/images/Optimising_the_Training_Loop/8.png)
 
 A lot happens behind the scenes with the addition of that single line. We will explore all of that when we dwelve into compilers in te upcoming post. At that point, we will also explore some domain specific programming languages whose compilers are particularly designed for deep learning style workloads on specilised GPUs. With such DSLs, we can potentially obtain speeds even faster than `torch.compile` compiled code. 
 
@@ -333,6 +347,8 @@ As promised, here is the profile for full 117 million parameter GPT-2-small trai
 3. And torch.compile with default parameters.
 
 The resulting model takes 7 seconds for two batches and consumes just 10 Gb peak memory!
+
+![Profile for GPT2-small](/assets/images/Optimising_the_Training_Loop/9.png)
 
 By making small tweaks to our training loop, we were able to train GPT-2-small on a single GPU with loads of memory to spare!
 
