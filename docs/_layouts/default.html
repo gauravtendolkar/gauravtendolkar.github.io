@@ -10,14 +10,6 @@
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
         {{ content }}
-        {% raw %}
-          {% include code.html code='
-          def hello_world():
-              print("Hello, World!")
-
-          hello_world()
-          ' lang='python' %}
-        {% endraw %}
       </div>
     </main>
 
