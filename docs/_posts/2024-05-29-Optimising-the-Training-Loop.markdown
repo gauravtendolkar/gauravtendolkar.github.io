@@ -263,7 +263,7 @@ gradient_accumulation_steps = 4
 # Copy model to correct device
 model = model.to(device)
 for epoch in range(num_epochs):
-	for batch, (inputs, targets) in enumerate(train_dataloader):
+  for batch, (inputs, targets) in enumerate(train_dataloader):
 		micro_batch_size = inputs.shape[0] // gradient_accumulation_steps
 		# Copy first micro batch
 		micro_batch_inputs = inputs[:micro_batch_size, :].to(device, non_blocking=True)
@@ -271,8 +271,8 @@ for epoch in range(num_epochs):
 		# Divide a batch into micro batches
 		for micro_batch_step in range(1, gradient_accumulation_steps):
 	    start, end = (
-	        micro_batch_step * micro_batch_size,
-	        (micro_batch_step + 1) * micro_batch_size,
+        micro_batch_step * micro_batch_size,
+        (micro_batch_step + 1) * micro_batch_size,
 	    )
 	    # Asynchronously copy next micro batch tensors to 
 	    # correct device before processing current micro batch
@@ -283,10 +283,10 @@ for epoch in range(num_epochs):
 	    preds = model(micro_batch_inputs, train=True)
 	    # Compute loss
 	    loss = cross_entropy(
-	        preds.view(-1, preds.size(-1)),
-	        micro_batch_targets.view(-1),
-	        ignore_index=PADDING_TOKEN_ID,
-	        reduction="mean",
+        preds.view(-1, preds.size(-1)),
+        micro_batch_targets.view(-1),
+        ignore_index=PADDING_TOKEN_ID,
+        reduction="mean",
 	    )
 	    # Scale loss
 	    loss = loss / gradient_accumulation_steps
