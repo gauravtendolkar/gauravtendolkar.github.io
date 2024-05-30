@@ -29,25 +29,25 @@ Let's start by implementing a typical training loop.
 # Copy model to correct device
 model = model.to(device)
 for epoch in range(num_epochs):
-		for batch, (inputs, targets) in enumerate(train_dataloader):
-				# Copy tensors to correct device
-		    inputs, targets = inputs.to(device), targets.to(device)
-		    # Forward pass
-		    preds = model(inputs, train=True)
-		    # Compute loss
-		    loss = cross_entropy(
-		        preds.view(-1, preds.size(-1)),
-		        targets.view(-1),
-		        ignore_index=PADDING_TOKEN_ID,
-		        reduction="mean",
-		    )
-		    # Backward pass to compute and accumulate gradients
-		    loss.backward()
-		    print(f"Loss: {loss.item()}")
-		    # Descend the gradient one step
-		    optimizer.step()
-		    # Set the stored gradients to 0
-		    optimizer.zero_grad()
+  for batch, (inputs, targets) in enumerate(train_dataloader):
+    # Copy tensors to correct device
+    inputs, targets = inputs.to(device), targets.to(device)
+    # Forward pass
+    preds = model(inputs, train=True)
+    # Compute loss
+    loss = cross_entropy(
+        preds.view(-1, preds.size(-1)),
+        targets.view(-1),
+        ignore_index=PADDING_TOKEN_ID,
+        reduction="mean",
+    )
+    # Backward pass to compute and accumulate gradients
+    loss.backward()
+    print(f"Loss: {loss.item()}")
+    # Descend the gradient one step
+    optimizer.step()
+    # Set the stored gradients to 0
+optimizer.zero_grad()
 {% endhighlight %}
 
 Here `targets` and `inputs` are a batch of sequences of token ids having the shape `[batch_size, context_length, 1]`. For next token prediction with teacher forcing, the target sequences are just input sequences shifted by one token. In case the sequence length is less than `context_length`, the rest of the positions are filled with `PADDING_TOKEN_ID`. The predictions `preds` are logits of shape `[batch_size, context_length, vocabulary_size]` . The cross entropy is computed independently for each pair of predicted token probabilities and target token id and then averaged across the batch and sequence dimensions. Therefore, the predictions can be flattened into shape `[batch_size * context_length, vocabulary_size]` and the targets can be flattened into shape `[batch_size * context_length, 1]` . Refer to the documentation of [torch.nn.functional.cross_entropy](https://pytorch.org/docs/stable/generated/torch.nn.functional.cross_entropy.html) for further details on the expected inputs.
