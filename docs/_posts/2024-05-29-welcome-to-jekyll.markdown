@@ -6,6 +6,8 @@ categories: AL ML LLM
 ---
 The diagram below is a chart from the paper Scaling Laws for Neural Language Models by OpenAI. The paper examines the test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape.
 
+![Test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape](/assets/images/Optimising_the_Training_Loop/1.png)
+
 The chart on the right has the horizontal axis in PF-days (1 PF-day is equal to \(8.64 \times 10^{19}\) FLOPS (FLoating point Operations Per Second)). The vertical axis shows the test loss which is categorical cross entropy between predictions and ground truth from the test dataset. 
 
 The chart shows that models with fewer parameters converge at a higher test loss, irrespective of how long you train them. It is preferable (in terms of test loss) to use a larger model and stop early (before convergence) rather than training a smaller model to convergence. To reach a test loss of 4 or below, we need a minimum of \(10^{-3}\) PF-days with a model having at least ~\(10^{8}\) parameters (100 million). For reference, GPT-2 is a 1.5 billion parameter model. When trained to convergence, it achieves a test loss of ~1.5. 
