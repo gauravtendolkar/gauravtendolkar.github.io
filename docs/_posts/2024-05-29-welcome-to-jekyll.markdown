@@ -8,11 +8,11 @@ The diagram below is a chart from the paper Scaling Laws for Neural Language Mod
 
 ![Test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape](/assets/images/Optimising_the_Training_Loop/1.png)
 
-The chart on the right has the horizontal axis in PF-days (1 PF-day is equal to \(8.64 \times 10^{19}\) FLOPS (FLoating point Operations Per Second)). The vertical axis shows the test loss which is categorical cross entropy between predictions and ground truth from the test dataset. 
+The chart on the right has the horizontal axis in PF-days (1 PF-day is equal to $8.64 \times 10^{19}$ FLOPS (FLoating point Operations Per Second)). The vertical axis shows the test loss which is categorical cross entropy between predictions and ground truth from the test dataset. 
 
-The chart shows that models with fewer parameters converge at a higher test loss, irrespective of how long you train them. It is preferable (in terms of test loss) to use a larger model and stop early (before convergence) rather than training a smaller model to convergence. To reach a test loss of 4 or below, we need a minimum of \(10^{-3}\) PF-days with a model having at least ~\(10^{8}\) parameters (100 million). For reference, GPT-2 is a 1.5 billion parameter model. When trained to convergence, it achieves a test loss of ~1.5. 
+The chart shows that models with fewer parameters converge at a higher test loss, irrespective of how long you train them. It is preferable (in terms of test loss) to use a larger model and stop early (before convergence) rather than training a smaller model to convergence. To reach a test loss of 4 or below, we need a minimum of $10^{-3}$ PF-days with a model having at least ~$10^{8}$ parameters (100 million). For reference, GPT-2 is a 1.5 billion parameter model. When trained to convergence, it achieves a test loss of ~1.5. 
 
-To reach the level of GPT-2 (test loss of 1.5 or below), we need at least a billion (\(10^{9}\)) parameter model trained for \(10^{0} = 1\) PF-days (\(8.64 \times 10^{19}\) FLOPS). A single A100 GPU can run at \(0.195 \times 10^{14}\) FLOPS if operating in 32 bit floating point precision. Which means, we need to train a billion parameter model (in 32 bit precision) for at least 4,430,769 seconds (approximately 7 weeks). And this assumes that we utilise the GPU at its peak performance.
+To reach the level of GPT-2 (test loss of 1.5 or below), we need at least a billion ($10^{9}$) parameter model trained for $10^{0} = 1$ PF-days ($8.64 \times 10^{19}$ FLOPS). A single A100 GPU can run at $0.195 \times 10^{14}$ FLOPS if operating in 32 bit floating point precision. Which means, we need to train a billion parameter model (in 32 bit precision) for at least 4,430,769 seconds (approximately 7 weeks). And this assumes that we utilise the GPU at its peak performance.
 
 Even when you're not training language models, determining the right hyperparameters for a deep learning model is an iterative process. This process involves pseudo-random exploration based on intuition, and any errors in code often fail silently. Therefore, it's crucial to run experiments quickly to save both time and money.
 
@@ -68,36 +68,36 @@ Note that in this case, the device has to store at least -
 | model parameters | num_params |
 | Optimiser states like momentum | num_params * num_states_per_parameter |
 
-Note that, for a 117 million parameter GPT-2-small model, the gradients, model parameters and optimiser states will consume just \(4 \times 117 \times 10^6 \times 3 = 1.4\text{ Gb}\) of memory (assuming one state number per parameter for optimiser and all numbers being stored in 32 bit floating point precision). The data consumes a negligible amount in comparison. 
+Note that, for a 117 million parameter GPT-2-small model, the gradients, model parameters and optimiser states will consume just $4 \times 117 \times 10^6 \times 3 = 1.4\text{ Gb}$ of memory (assuming one state number per parameter for optimiser and all numbers being stored in 32 bit floating point precision). The data consumes a negligible amount in comparison. 
 
 Yet, while training with a single GPU of 32 Gb memory capacity, the program will throw out of memory exceptions. This is because storing the activations can require an order of magnitude more memory than the rest of the tensors combined.
 
 The number of activation values stored during forward pass is difficult to compute. In automatic differentiation, during forward pass, every operation needs to store some data it would need for computing gradients during backward pass using chain rule. For example, in case of matrix multiplication of an input matrix with a weight matrix, automatic differentiation needs to store the input matrix to compute gradient of output values with respect to the weight matrix values during backward pass. In case of activation like softmax, we need to store the output of softmax to compute the gradient of output values with respect to the input matrix values. The number of activation values stored depends on the operations in computation graph and the input/output shapes of each.
 
 In case of transformers, the paper [Reducing Activation Recomputation in Large Transformer Models](https://arxiv.org/pdf/2205.05198) by Nvidia gives a good formula for estimating the activation memory of a transformer block. According to that paper, a single standard transformer block using 32-bit floating point numbers requires
-\[
+$$
 2sbh\left(34 + \frac{5as}{h}\right)
-\]
+$$
 
-where \(s\) is the context length, \(h\) is the embedding dimension, \(b\) is the batch size and \(a\) is the number of attention heads.
+where $s$ is the context length, $h$ is the embedding dimension, $b$ is the batch size and $a$ is the number of attention heads.
 
-The GPT-2-small [configuration](https://github.com/openai/gpt-2/blob/master/src/model.py) uses 12 transformer blocks with \(s = 1024\), \(h = 768\), \(b = 32\), and \(a = 12\). Which means the peak memory usage should be close to 69 Gb! The initial learnt positional embeddings and word embeddings (shared with final projection layer) would use a few aditional Mbs.
+The GPT-2-small [configuration](https://github.com/openai/gpt-2/blob/master/src/model.py) uses 12 transformer blocks with $s = 1024$, $h = 768$, $b = 32$, and $a = 12$. Which means the peak memory usage should be close to 69 Gb! The initial learnt positional embeddings and word embeddings (shared with final projection layer) would use a few aditional Mbs.
 
 By the end of this post, we should be able to train a GPT-2-small sized model (or even larger) on a single GPU almost 10 times faster than a naive PyTorch training loop implemented above.
 
-In order to iterate and profile faster, we shall use a smaller reference architecture with just four transformer blocks having \(s = 512\), \(h = 256\), \(b = 32\), and \(a = 4\). With this model configuration, our peak memory usage for the naive version should be close to 2.5 Gb.
+In order to iterate and profile faster, we shall use a smaller reference architecture with just four transformer blocks having $s = 512$, $h = 256$, $b = 32$, and $a = 4$. With this model configuration, our peak memory usage for the naive version should be close to 2.5 Gb.
 
 Lets start with basic memory optimizations. First, `optimizer.zero_grad()` allows a parameter `set_to_none`. When `set_to_none` is `True`, the gradient is set to `None` instead of a tensor of `0`s thus saving a modest amount of memory. But it still does not change the peak memory usage. You only need to exceed memory once for the script to crash.
 
 ## Gradient Accumulation
 
-To reduce peak memory usage, we can use a simple technique called gradient accumulation. Note that for a batch size of \(N\) samples \(x_1, x_2, ..., x_N\),
+To reduce peak memory usage, we can use a simple technique called gradient accumulation. Note that for a batch size of $N$ samples $x_1, x_2, ..., x_N$,
 
-\[
+$$
 \frac{\text{d}(loss)}{\text{d}W} =  \frac{1}{N}\left(\frac{\text{d}(loss(x_1))}{\text{d}W} + \frac{\text{d}(loss(x_2))}{\text{d}W} + ... + \frac{\text{d}(loss(x_N))}{\text{d}W}\right)
-\]
+$$
 
-Therefore, instead of feeding all \(N\) samples of a batch during the forward pass, we could forward one sample at a time and accumulate the gradients for that sample. The accumulated gradient over all samples of a batch can then be divided by \(N\) to give the final gradient. This gradient value should be exactly equal to the gradient computed by feeding the entire batch at once (barring numerical precision issues). This way, we get to use a large batch size for gradient descent and yet the peak activation memory drops by a factor of \(N\). 
+Therefore, instead of feeding all $N$ samples of a batch during the forward pass, we could forward one sample at a time and accumulate the gradients for that sample. The accumulated gradient over all samples of a batch can then be divided by $N$ to give the final gradient. This gradient value should be exactly equal to the gradient computed by feeding the entire batch at once (barring numerical precision issues). This way, we get to use a large batch size for gradient descent and yet the peak activation memory drops by a factor of $N$. 
 
 This technique will result in increased computation time as samples are now processed in a loop. Instead of dividing the batch into individual samples, we candivide the batch into micro batches of just enough samples to fit into the GPU memory.
 
