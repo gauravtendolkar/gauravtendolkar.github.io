@@ -352,36 +352,13 @@ The resulting model takes 7 seconds for two batches and consumes just 10 Gb peak
 
 By making small tweaks to our training loop, we were able to train GPT-2-small on a single GPU with loads of memory to spare!
 
-## Sample Results
-
-The micro version of GPT-2 has half the number of transformer blocks, half the embeding size and half the number of attention heads. The model has close to 10 million total parameters (10,343,424 parameters).
+## Next Steps
 
 The entire code used in this post, along with reference model checkpoints and dataset can be found on the associated [GitHub repository](https://github.com/gauravtendolkar/EduLLM).
 
 In the upcoming posts, we shall discuss - 
 
 1. Even more optimisations, but specific to an LLM model architecture.
+2. Train a smaller version of GPT2 on our custom curated data and custom trained BPE encoder.
 2. Explore distributed training with multiple GPUs that will allow us to train full 1.5 billion parameter GPT-2 model.
 3. Explore PyTorch compilers and some domain specific compiled languages for optimised deep learning on GPUs.
-
-Jekyll requires blog post files to be named according to the following format:
-
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
