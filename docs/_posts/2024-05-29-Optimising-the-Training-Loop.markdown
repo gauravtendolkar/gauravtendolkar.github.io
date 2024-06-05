@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Optimising the Training Loop"
+title:  "3. Optimising the Training Loop"
 date:   2024-05-29 18:33:45 -0400
 categories: Optimising-the-Training-Loop
 ---
