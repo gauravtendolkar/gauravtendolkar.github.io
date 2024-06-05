@@ -9,8 +9,19 @@ layout: default
 
   {{ content }}
 
+  <h2 class="post-list-heading">Books</h2>
+  <table>
+    <tr>
+      <td rowspan="2">sfg</td>
+      <td>sfg</td>
+    </tr>
+    <tr>
+      <td>sfg</td>
+    </tr>
+  </table>
+
   {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
+    <h2 class="post-list-heading">{{ page.list_title | default: "Blog Posts" }}</h2>
     <ul class="post-list">
       {%- for post in site.posts -%}
       <li>
