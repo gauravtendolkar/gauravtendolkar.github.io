@@ -4,24 +4,30 @@ layout: default
 
 <div class="home">
   <div class="flex-container">
-    <div style="margin-right: 30px;">
+    <div style="margin-right: 30px">
       <img
         src="/assets/images/pp.jpg"
         style="border-radius: 50%; width: 150px; height: 150px"
       />
     </div>
-    <div>Welcome to my personal website. I currently work as a senior applied scientist at Microsoft where I build AI features for Microsoft Designer.</div>
+    <div>
+      Welcome to my personal website. I currently work as a senior applied
+      scientist at Microsoft where I build AI features for Microsoft Designer.
+    </div>
   </div>
-  <h2 class="post-list-heading" style="margin-top: 50px;">Books</h2>
+  <h2 class="post-list-heading" style="margin-top: 50px">Books</h2>
   <div class="flex-container">
-    <div style="margin-right: 30px;">
+    <div style="margin-right: 30px">
       <img src="/assets/images/book.png" style="width: 150px" />
     </div>
-    <div>Eight brief, jargon-free lessons for a strong computer science foundation</div>
+    <div>
+      Eight brief, jargon-free lessons for a strong computer science foundation
+    </div>
+    <button class="action-button" role="button">Button 51</button>
   </div>
 
   {%- if site.posts.size > 0 -%}
-  <h2 class="post-list-heading" style="margin-top: 50px;">
+  <h2 class="post-list-heading" style="margin-top: 50px">
     {{ page.list_title | default: "Blog Posts" }}
   </h2>
   <ul class="post-list">
