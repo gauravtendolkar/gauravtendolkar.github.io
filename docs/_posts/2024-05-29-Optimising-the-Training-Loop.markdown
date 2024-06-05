@@ -2,7 +2,7 @@
 layout: post
 title:  "Optimising the Training Loop"
 date:   2024-05-29 18:33:45 -0400
-categories: [Optimising the Training Loop]
+categories: Optimising-the-Training-Loop
 ---
 The diagram below is a chart from the paper Scaling Laws for Neural Language Models by OpenAI. The paper examines the test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape.
 

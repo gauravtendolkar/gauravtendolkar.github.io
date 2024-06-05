@@ -44,7 +44,7 @@ layout: default
   {% for category in site.categories %}
   <div class="flex-container">
     <div style="margin-right: 30px; min-width: 100px">
-      <a name="{{ category | first }}">{{ category | first }}</a>
+      <a name="{{ category | first }}">{{ category | first | replace: "-"," " }}</a>
     </div>
     <div>
       <ul class="post-list">
