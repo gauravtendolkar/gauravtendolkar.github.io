@@ -1,6 +1,6 @@
 ---
 layout: post
 title: "4. Optimising LLM Model Architecture"
-date: Coming Soon...
+posted: "Coming Soon..."
 categories: Super-Fast-LLM-Training
 ---

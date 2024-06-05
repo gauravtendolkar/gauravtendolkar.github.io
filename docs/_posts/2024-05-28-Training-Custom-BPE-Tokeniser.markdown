@@ -1,6 +1,6 @@
 ---
 layout: post
 title: "1. Data Collection and Preparation"
-date: Coming Soon...
+posted: "Coming Soon..."
 categories: Super-Fast-LLM-Training
 ---

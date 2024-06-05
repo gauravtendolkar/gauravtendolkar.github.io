@@ -29,7 +29,7 @@ url: "https://gauravtendolkar.github.io" # the base hostname & protocol for your
 twitter_username: 
 github_username:  gauravtendolkar
 
-show_excerpts: false
+show_excerpts: true
 
 # Build settings
 theme: minima
