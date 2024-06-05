@@ -3,3 +3,8 @@
 ---
 
 @import "minima";
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
