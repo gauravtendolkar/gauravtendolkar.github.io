@@ -16,11 +16,9 @@
   box-sizing: border-box;
   color: #000000;
   display: flex;
-  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 14px;
   justify-content: center;
-  line-height: 1.75rem;
+  line-height: 1.15rem;
   padding: .75rem 1.65rem;
   position: relative;
   text-align: center;
@@ -57,6 +55,6 @@
 @media (min-width: 768px) {
   .action-button {
     padding: .75rem 3rem;
-    font-size: 1.25rem;
+    font-size: 14px;
   }
 }
