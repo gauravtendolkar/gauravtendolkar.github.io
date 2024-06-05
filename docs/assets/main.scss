@@ -11,50 +11,53 @@
 
 /* CSS */
 .action-button {
-    background-color: transparent;
-    border: 1px solid #266DB6;
-    box-sizing: border-box;
-    color: #00132C;
-    font-family: "Avenir Next LT W01 Bold",sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 24px;
-    padding: 16px 23px;
-    position: relative;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+  background-color: #3DD1E7;
+  border: 0 solid #E5E7EB;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: .75rem 1.65rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none #000000 solid;
+  text-decoration-thickness: auto;
+  width: 100%;
+  max-width: 460px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.action-button:focus {
+  outline: 0;
+}
+
+.action-button:after {
+  content: '';
+  position: absolute;
+  border: 1px solid #000000;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+}
+
+.action-button:hover:after {
+  bottom: 2px;
+  left: 2px;
+}
+
+@media (min-width: 768px) {
+  .action-button {
+    padding: .75rem 3rem;
+    font-size: 1.25rem;
   }
-  
-  .action-button:hover,
-  .action-button:active {
-    outline: 0;
-  }
-  
-  .action-button:hover {
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  .action-button:before {
-    background-color: #D5EDF6;
-    content: "";
-    height: calc(100% + 3px);
-    position: absolute;
-    right: -7px;
-    top: -9px;
-    transition: background-color 300ms ease-in;
-    width: 100%;
-    z-index: -1;
-  }
-  
-  .action-button:hover:before {
-    background-color: #6DCFF6;
-  }
-  
-  @media (min-width: 768px) {
-    .action-button {
-      padding: 16px 32px;
-    }
-  }
+}
