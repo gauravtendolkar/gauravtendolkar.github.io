@@ -4,6 +4,5 @@
 
 layout: home
 
-content: >-
-    Welcome to my personal website. I currently work as a senior applied scientist at Microsoft where I build AI features for Microsoft Designer.
+content: Welcome to my personal website. I currently work as a senior applied scientist at Microsoft where I build AI features for Microsoft Designer.
 ---
