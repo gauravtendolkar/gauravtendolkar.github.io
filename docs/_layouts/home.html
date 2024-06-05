@@ -4,43 +4,40 @@ layout: default
 
 <div class="home">
   {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
-
-  {{ content }}
+  <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%} {{ content }}
 
   <h2 class="post-list-heading">Books</h2>
-  <table style="border-collapse: collapse; width: 100%" cellspacing="0" cellpadding="0">
-    <tr>
-      <td rowspan="2" style="max-width: 50%;">
-        <img src="/assets/images/Optimising_the_Training_Loop/1.png" style="border-radius: 50%; width: 150px; height: 150px;" />
-      </td>
-      <td>sfg</td>
-    </tr>
-    <tr>
-      <td>sfg</td>
-    </tr>
-  </table>
+  <div class="col-sm-6 col-md-4">
+    <img
+      src="/assets/images/Optimising_the_Training_Loop/1.png"
+      style="border-radius: 50%; width: 150px; height: 150px"
+    />
+  </div>
+  <div class="col-sm-6 col-md-8">
+    <div></div>
+    <div></div>
+  </div>
 
   {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Blog Posts" }}</h2>
-    <ul class="post-list">
-      {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
+  <h2 class="post-list-heading">
+    {{ page.list_title | default: "Blog Posts" }}
+  </h2>
+  <ul class="post-list">
+    {%- for post in site.posts -%}
+    <li>
+      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y"
+      -%}
+      <span class="post-meta">{{ post.date | date: date_format }}</span>
+      <h3>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+      </h3>
+      {%- if site.show_excerpts -%} {{ post.excerpt }} {%- endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
 
   {%- endif -%}
-
 </div>
