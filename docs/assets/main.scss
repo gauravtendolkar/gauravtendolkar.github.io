@@ -9,6 +9,11 @@
     flex-direction: row;
 }
 
+a.disabled {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
 /* CSS */
 .action-button {
   background-color: #a2cef4;
