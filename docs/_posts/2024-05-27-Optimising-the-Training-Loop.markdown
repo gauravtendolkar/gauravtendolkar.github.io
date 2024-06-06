@@ -4,6 +4,8 @@ title:  "3. Optimising the Training Loop"
 posted:   May 29, 2024
 categories: Super-Fast-LLM-Training
 ---
+In previous posts, we built a data collection pipeline and trained a byte pair encoder tailored to our data for our custom LLM training. Before, we define the LLM architecture, let's dive into some optimisation techniques that will help us save (a lot of) time and money.
+
 The diagram below is a chart from the paper [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361) by OpenAI. The paper examines the test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape.
 
 ![Test performance of a trained Language Model in relation to the model's size, data volume, training duration, and model shape](/assets/images/Optimising_the_Training_Loop/1.png)
@@ -313,7 +315,7 @@ Also note that all above optimisations were independent and can be combined to g
 3. Gradient checkpointing
 4. Asynchronous I/O
 
-Profiling tools will be used to find bugs and the right hyperparameters for such optimisations.
+Profiling tools should be used to find bugs and the right hyperparameters for such optimisations.
 
 ## Use a Compiler!
 
@@ -337,7 +339,7 @@ At this stage, the profile graph looks really weird and does not offer much info
 
 ![Compiling in max autotune mode](/assets/images/Optimising_the_Training_Loop/8.png)
 
-A lot happens behind the scenes with the addition of that single line. We will explore all of that when we dwelve into compilers in te upcoming post. At that point, we will also explore some domain specific programming languages whose compilers are particularly designed for deep learning style workloads on specilised GPUs. With such DSLs, we can potentially obtain speeds even faster than `torch.compile` compiled code. 
+A lot happens behind the scenes with the addition of that single line. We will explore all of that when we dwelve into compilers in upcoming posts. At that point, we will also explore some domain specific programming languages whose compilers are particularly designed for deep learning style workloads on specilised GPUs. With such DSLs, we can potentially obtain speeds even faster than `torch.compile` compiled code. 
 
 As promised, here is the profile for full 117 million parameter GPT-2-small training with a batch size of 32 and just a subset of optimisations - 
 
