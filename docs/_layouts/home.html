@@ -47,7 +47,8 @@ layout: default
     </div>
     <div>
       <ul class="post-list">
-        {%- for post in category.last | sort: "date" -%}
+        {% assign posts = category.last | sort: "title" %}
+        {%- for post in posts -%}
         <li>
           <span class="post-meta">{{ post.posted }}</span>
           <h3>
