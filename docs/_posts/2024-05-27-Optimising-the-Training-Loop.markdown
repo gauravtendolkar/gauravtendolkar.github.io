@@ -3,6 +3,7 @@ layout: post
 title:  "3. Optimising the Training Loop"
 posted:   May 29, 2024
 categories: Super-Fast-LLM-Training
+live: true
 ---
 In previous posts, we built a data collection pipeline and trained a byte pair encoder tailored to our data for our custom LLM training. Before, we define the LLM architecture, let's dive into some optimisation techniques that will help us save (a lot of) time and money.
 

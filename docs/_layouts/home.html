@@ -51,9 +51,15 @@ layout: default
         <li>
           <span class="post-meta">{{ post.posted }}</span>
           <h3>
+            {%- if post.live = true -%}
             <a class="post-link" href="{{ post.url | relative_url }}">
               {{ post.title | escape }}
             </a>
+            {%- else -%}
+            <a class="post-link" href="" disabled>
+              {{ post.title | escape }}
+            </a>
+            {%- endif -%}
           </h3>
           {%- if site.show_excerpts -%} {{ post.excerpt }} {%- endif -%}
         </li>
