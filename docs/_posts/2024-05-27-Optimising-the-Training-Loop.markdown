@@ -90,15 +90,15 @@ Lets start with basic memory optimizations. First, `optimizer.zero_grad()` allow
 
 ## Gradient Accumulation
 
-To reduce peak memory usage, we can use a simple technique called gradient accumulation. Note that for a batch size of $N$ samples $x_1, x_2, ..., x_N$,
+Note that the activation memory depends on batch size. To reduce peak memory usage, we can use a simple technique called gradient accumulation. Note that for a batch size of $N$ samples $x_1, x_2, ..., x_N$,
 
 $$
 \frac{\text{d}(loss)}{\text{d}W} =  \frac{1}{N}\left(\frac{\text{d}(loss(x_1))}{\text{d}W} + \frac{\text{d}(loss(x_2))}{\text{d}W} + ... + \frac{\text{d}(loss(x_N))}{\text{d}W}\right)
 $$
 
-Therefore, instead of feeding all $N$ samples of a batch during the forward pass, we could forward one sample at a time and accumulate the gradients for that sample. The accumulated gradient over all samples of a batch can then be divided by $N$ to give the final gradient. This gradient value should be exactly equal to the gradient computed by feeding the entire batch at once (barring numerical precision issues). This way, we get to use a large batch size for gradient descent and yet the peak activation memory drops by a factor of $N$. 
+Therefore, instead of feeding all $N$ samples of a batch during the forward pass, we could forward one sample at a time and accumulate the gradients for that sample. The accumulated gradient over all samples of a batch can then be divided by $N$ to give the final gradient. This gradient value should be exactly equal to the gradient computed by feeding the entire batch at once (barring numerical precision issues). This way, we get to use a large batch size ($N$) for gradient descent and yet the peak activation memory drops by a factor of $N$. 
 
-This technique will result in increased computation time as samples are now processed in a loop. Instead of dividing the batch into individual samples, we candivide the batch into micro batches of just enough samples to fit into the GPU memory.
+This technique will result in increased computation time as samples are now processed in a loop. Therefore, to strike a balance, we can divide the batch into micro batches of just enough samples to fit into the GPU memory.
 
 Lets re-write the training loop with gradient accumulation.
 
