@@ -30,7 +30,7 @@ def leaky_relu(a):
     return 0.1 * a
 
 if __name__ == "__main__":
-		data = torch.randn((1,))
+    data = torch.randn((1,))
     leaky_relu(data)
 ```
 
@@ -91,10 +91,10 @@ output         output  output                  ((gt,),)   {}
 
 ===== Generated code based on FX Graph 1 (__compiled_fn_0) =====
 class GraphModule(torch.nn.Module):
-	def forward(self, L_a_ : torch.Tensor):
-		l_a_ = L_a_
-		gt = l_a_ > 0;  l_a_ = None
-		return (gt,)
+    def forward(self, L_a_ : torch.Tensor):
+        l_a_ = L_a_
+        gt = l_a_ > 0;  l_a_ = None
+        return (gt,)
 ```
 
 This graph does not have any data dependent operations or conditional branches. Therefore, a separate compiler (like Torch Inductor) can aggressively optimise this subgraph and the optimised compiled code can be cached and reused at runtime. 
@@ -144,10 +144,10 @@ output         output  output                   ((mul,),)    {}
 
 ===== Generated code based on FX Graph 3 (__compiled_fn_3) =====
 class GraphModule(torch.nn.Module):
-	def forward(self, L_a_ : torch.Tensor):
-		l_a_ = L_a_
-		mul = 0.1 * l_a_;  l_a_ = None
-		return (mul,)
+    def forward(self, L_a_ : torch.Tensor):
+        l_a_ = L_a_
+        mul = 0.1 * l_a_;  l_a_ = None
+        return (mul,)
 ```
 
 The corresponding modified bytecode to include call to `__compiled_fn_3` is shown below.
@@ -196,23 +196,23 @@ In case of graph breaks, each of the subgraph generates a forward and backward g
 ```python
 ==== Joint graph 4 =====
 def forward(self, primals, tangents):
-	primals_1: "f32[1]"; tangents_1: "f32[1]"; 
-	primals_1, tangents_1, = fx_pytree.tree_flatten_spec([primals, tangents], self._in_spec)
-	mul: "f32[1]" = torch.ops.aten.mul.Tensor(primals_1, 0.1);  primals_1 = None
-	mul_1: "f32[1]" = torch.ops.aten.mul.Tensor(tangents_1, 0.1);  tangents_1 = None
-	return pytree.tree_unflatten([mul, mul_1], self._out_spec)
+    primals_1: "f32[1]"; tangents_1: "f32[1]"; 
+    primals_1, tangents_1, = fx_pytree.tree_flatten_spec([primals, tangents], self._in_spec)
+    mul: "f32[1]" = torch.ops.aten.mul.Tensor(primals_1, 0.1);  primals_1 = None
+    mul_1: "f32[1]" = torch.ops.aten.mul.Tensor(tangents_1, 0.1);  tangents_1 = None
+    return pytree.tree_unflatten([mul, mul_1], self._out_spec)
 
 TRACED GRAPH
 ===== Forward graph 4 =====
 def forward(self, primals_1: "f32[1]"):
-	mul: "f32[1]" = torch.ops.aten.mul.Tensor(primals_1, 0.1);  primals_1 = None
-	return [mul]
+    mul: "f32[1]" = torch.ops.aten.mul.Tensor(primals_1, 0.1);  primals_1 = None
+    return [mul]
 
 TRACED GRAPH
 ===== Backward graph 4 =====
 def forward(self, tangents_1: "f32[1]"):
-	mul_1: "f32[1]" = torch.ops.aten.mul.Tensor(tangents_1, 0.1);  tangents_1 = None
-	return [mul_1]      
+    mul_1: "f32[1]" = torch.ops.aten.mul.Tensor(tangents_1, 0.1);  tangents_1 = None
+    return [mul_1]      
 ```
 
 All these subgraphs can be optimized and cached by a backend compiler. Note that TorchDynamo just creates static subgraphs and transforms the bytecode to use their reconstructed code. To make the code faster, it needs to be paired with a compiler that can generate optimized code for the static subgraphs. TorchInductor, PyTorch’s built in backend compiler, uses these subgraphs to generate optimized C++ code or [Triton](https://dl.acm.org/doi/abs/10.1145/3315508.3329973) kernels depending on the hardware. 
@@ -249,12 +249,12 @@ $$
 
 ```python
 for i in range(0, m):
-	for j in range(0, n):
-		# Computation performed by each thread
-		acc = 0
-		for k in range(0, l):
-			acc += M[i, k] * N[k, j]
-		R[i, j] = acc
+    for j in range(0, n):
+        # Computation performed by each thread
+        acc = 0
+        for k in range(0, l):
+            acc += M[i, k] * N[k, j]
+        R[i, j] = acc
 ```
 
 Lets say $m = n = l = 32$, which means $R$ has a total of $32\times 32 = 1024$ elements. Now let’s say that the block size is also 16, which means we need 64 blocks of threads to compute all elements of $R$ (each thread performs one dot product between a row of $M$ and a column of $N$).  To compute the first row of $R$ ($32$ elements), we need two blocks of threads. Each block loads and caches the first row of $M$ ($l$ elements) in shared memory and 16 columns of $N$ ($\frac{N}{2}$ columns of $l$ elements each) . This results in a total of $2\times (L + \frac{N}{2}\times L) = 2\times (32 + 16\times 32) = 1088$ floating point numbers loaded from global memory.
@@ -266,19 +266,19 @@ By changing the order in which elements of $R$ are computed, we reduced the load
 ```python
 # Assume m and n are exact multiples of BLOCK_SIZE
 for i in range(0, m, BLOCK_SIZE):
-	for j in range(0, n, BLOCK_SIZE):
-		# Load BLOCK_SIZE rows of M in shared memory
-		load(M[i: i+BLOCK_SIZE, :])
-		# Load BLOCK_SIZE columns of N in shared memory
-		load(N[:, j: j+BLOCK_SIZE])
-		# Computation performed by each block
-		for ii in range(0, BLOCK_SIZE):
-			for jj in range(0, BLOCK_SIZE):
-				# Computation performed by each thread
-				acc = 0
-				for k in range(0, l):
-					acc += MM[i + ii, k] * N[k, j + jj]
-				R[i + ii, j + jj] = acc
+    for j in range(0, n, BLOCK_SIZE):
+        # Load BLOCK_SIZE rows of M in shared memory
+        load(M[i: i+BLOCK_SIZE, :])
+        # Load BLOCK_SIZE columns of N in shared memory
+        load(N[:, j: j+BLOCK_SIZE])
+        # Computation performed by each block
+        for ii in range(0, BLOCK_SIZE):
+            for jj in range(0, BLOCK_SIZE):
+                # Computation performed by each thread
+                acc = 0
+                for k in range(0, l):
+                    acc += MM[i + ii, k] * N[k, j + jj]
+                R[i + ii, j + jj] = acc
 ```
 
 Note that Each block `2 * BLOCK_SIZE * l` numbers in shared memory. This can be prohibitive if `l` is a large number as the shared memory per block is limited by hardware. Therefore, the algorithm is further modified to tile `l` dimension too. Here too, each number in $M$ is loaded from global memory `m/BLOCK_SIZE` times and reused `BLOCK_SIZE` times. Similarly, each number in $N$ is loaded from global memory `n/BLOCK_SIZE` times and reused `BLOCK_SIZE` times. But the algorithm works even for large `l`.
