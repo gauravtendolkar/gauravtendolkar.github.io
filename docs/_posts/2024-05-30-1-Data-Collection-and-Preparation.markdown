@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2. Training Custom BPE Tokeniser"
+title: "1. Data Collection and Preparation"
 posted: "Coming Soon..."
 categories: Super-Fast-LLM-Training
 live: false
