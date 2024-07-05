@@ -35,6 +35,7 @@ show_excerpts: true
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 pages: 
 header_pages: 
