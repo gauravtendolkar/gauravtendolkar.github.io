@@ -69,7 +69,7 @@ $$
 Therefore, we won’t try to estimate the entire probability distribution of parameters. We will make our peace with not knowing the uncertainties in parameters. Instead, we will try to obtain the $\theta$ that maximises <span>$P(\theta | x)$. Such an estimate of $\theta$ is also known as a point estimate. The denominator marginal distribution, being constant, plays no part in maximization and therefore can be ignored. We find the point estimate $\theta^*$ by maximizing the numerator,
 
 $$
-\theta^* = \argmax_{\theta}P(X=D \ | \ \theta)P(\theta)
+\theta^* = \text{argmax}_{\theta}P(X=D \ | \ \theta)P(\theta)
 $$
 
 Such an estimate is also called the Maximum a Posteriori (MAP) estimate.
@@ -77,7 +77,7 @@ Such an estimate is also called the Maximum a Posteriori (MAP) estimate.
 In cases when we assume a uniform distribution for <span>$P(\theta)$, the optimization reduces to, 
 
 $$
-\theta^* = \argmax_{\theta}P(X=D \ | \ \theta)
+\theta^* = \text{argmax}_{\theta}P(X=D \ | \ \theta)
 $$
 
 Such an estimate is also called the Maximum Likelihood Estimate (MLE).
@@ -87,13 +87,13 @@ These are tractable optimization problems compared to estimation of entire proba
 In this series, we shall focus on MLE to find optimal parameter values for generating “realistic” data. Note that, such optimizations are performed on a computer. Since probabilities lie between 0 and 1 and the datasets are usually large, multiplying many such probabilities leads to numerical issues.
 
 $$
-\theta^* = \argmax_{\theta}P(X=D \ | \ \theta) = \argmax_{\theta}\prod_{x\in D}P(X=x \ | \ \theta)
+\theta^* = \text{argmax}_{\theta}P(X=D \ | \ \theta) = \text{argmax}_{\theta}\prod_{x\in D}P(X=x \ | \ \theta)
 $$
 
 To avoid such numerical issues, in practice, we find the parameters that maximize the log likelihood (or equivalently, minimize negative of log likelihood). Since $\log$ is a monotonous increasing function, we get the exact same $\theta^*$ as solution.
 
 $$
-\theta^* = \argmax_{\theta}\sum_{x \in D} \log P(X=x | \theta)
+\theta^* = \text{argmax}_{\theta}\sum_{x \in D} \log P(X=x | \theta)
 $$
 
 ## Sampling
@@ -102,13 +102,12 @@ Let’s say we found the optimal parameters of our approximate probability distr
 
 <div class="callout">
 💡 Sometimes, instead of finding parameters of a parametric PDF, we find parameters of a function that directly returns a sample. For example, a generator in GAN.
-
 </div>
 
 To sample from a known Probability Distribution Function (PDF), you need a random number generator that can generate a uniform random number between 0 and 1 and a way to compute the inverse of Cumulative Distribution Function (CDF) from the PDF. For random variables that take continuous values, The CDF is
 
 $$
-⁍
+C(X=x) = \int_{\{z \in X | z \leq x\}}{P(X=z)dz}
 $$
 
 Then, the traditional sampling algorithm is,
@@ -147,7 +146,7 @@ First, something that confuses me if I am not paying attention - Multivariate Ga
 Along with <span>$P(z)$, we choose a sufficiently complex function $f_{\theta}$ with parameters $\theta$. The input to $f_{\theta}$ is a sample of latent variable $z$ and the outputs are numbers used to parametrize another different simple parametric probability distribution - let’s say another multivariate isotropic Gaussian PDF. Let’s denote the conditional PDF of $X$ given $z$ as <span>$P_{\theta}(x | z)$. Now, sampling a data point involves 
 
 1. Sampling $z$ from <span>$P(z)$. This step is computationally tractable thanks to [Box-Muller](https://en.wikipedia.org/wiki/Box–Muller_transform) method.
-2. Computing $f_{\theta}(z)$</span> to get $\mu$ and $\sigma$ parameters of output multivariate isotropic Gaussian distribution. This step is also computationally tractable.
+2. Computing $f_{\theta}(z)$ to get $\mu$ and $\sigma$ parameters of output multivariate isotropic Gaussian distribution. This step is also computationally tractable.
 3. Sampling a data point $x$ from $N(\mu, \sigma)$. Like step 1, this step is also computationally tractable.
 
 <div class="callout">
@@ -175,20 +174,20 @@ But we do not have any efficient way to compute <span>$P_{\theta}(z|x)$. That is
 But we do need efficient way to compute <span>$P_{\theta}(x)$</span> since to find the optimal parameters $\theta$ via MLE approach, we need to maximize the likelihood of data.
 
 $$
-\theta^* = \argmax_{\theta}\sum_{x \in D} P_{\theta}(X=x)
+\theta^* = \text{argmax}_{\theta}\sum_{x \in D} P_{\theta}(X=x)
 $$
 
 ## Encoder decoder architecture
 
 We saw that since <span>$P_{\theta}(z|x)$</span> is intractable, we cannot learn the parameters of $f_{\theta}$ - our decoder (a decoder converts a latent sample into a data point or a distribution over data point). 
 
-To make this problem tractable, we find another parametric model $g_{\phi}$ that takes input a data point $x$ and outputs $\mu$ and $\sigma$ of a Gaussian distribution for $z$. Using this model, we can compute the proxy for probability <span>$P_{\theta}(z|x)$</span> efficiently and we denote it $Q_{\phi}(z|x)$.
+To make this problem tractable, we find another parametric model $g_{\phi}$ that takes input a data point $x$ and outputs $\mu$ and $\sigma$ of a Gaussian distribution for $z$. Using this model, we can compute the proxy for probability <span>$P_{\theta}(z|x)$</span> efficiently and we denote it <span>$Q_{\phi}(z|x)$</span>.
 
 This leads to the popular encoder decoder architecture.
 
 So to sample data points similar to true distribution, we need to find $f_{\theta}$ and $g_{\phi}$ jointly such that 
 
-1. KL divergence (a metric for distance between two probability distributions) between <span>$P_{\theta}(z|x)$</span> and $Q_{\phi}(z|x)$</span> is minimized. This is the optimization objective for our encoder part since it encodes a data point into latent space. 
+1. KL divergence (a metric for distance between two probability distributions) between <span>$P_{\theta}(z|x)$</span> and <span>$Q_{\phi}(z|x)$</span> is minimized. This is the optimization objective for our encoder part since it encodes a data point into latent space. 
 2. The likelihood of data $X$ under marginal distribution <span>$P_{\theta}(X)$</span> is maximized. This is the optimization objective for our decoder part since it converts a latent sample into a data point.
 
 Such encoder decoder architecture is a very popular paradigm of generative models. Not only do they give us a latent space succinctly capturing patterns from high dimensional data, but also a probability distribution complex enough to model data and an efficient way to sample from it.
