@@ -23,7 +23,7 @@ We don’t know the function <span>$P^*(x)$</span> but we do have samples from i
 Using that dataset, we wish to find an approximation to this <span>$P^*(x)$. The approximation is another probability distribution function - either a parametric one <span>$P(x; \theta)$</span> with parameters $\theta$, or a non-parametric PDF. 
 
 <div class="callout">
-🤔 **Why not just sample random images from the dataset? Why estimate a probability distribution to sample from?**
+🤔 <b>Why not just sample random images from the dataset? Why estimate a probability distribution to sample from?</b>
 An obvious advantage is that we can generate interesting images that are outside our limited dataset. But there is more to this approach. We can also achieve tasks like in-painting or out-painting where we are provided with only a part of the image and we need to complete the image based on that part. We can perform de-noising, compression, image super-resolution and many more tasks. Additionally, if our distributions employ latent random variables,  we can use the latent space to cluster images or vary isolated properties of images. We shall learn about these approaches later.
 </div>
 
