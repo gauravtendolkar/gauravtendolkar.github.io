@@ -139,8 +139,7 @@ We imagine a new random variable $Z$ which has one of these simple parametric pr
 
 <div class="callout">
 📝 <b>Short note on Multivariate Gaussian</b><br/>
-First, something that confuses me if I am not paying attention - Multivariate Gaussian is different from mixture of Gaussians. Multivariate Gaussian is a Gaussian distribution over a multidimensional vector but has a single mode. You can also have a mixture of multivariate Gaussians which will give you multimodal distributions. Another important thing to note about a Multivariate Gaussian is that, in higher dimensions, the distribution does not look or behave like you expect in 1D and 2D cases. This is due to the [Gaussian Soap Bubble Effect](https://www.inference.vc/high-dimensional-gaussian-distributions-are-soap-bubble/).
-
+First, something that confuses me if I am not paying attention - Multivariate Gaussian is different from mixture of Gaussians. Multivariate Gaussian is a Gaussian distribution over a multidimensional vector but has a single mode. You can also have a mixture of multivariate Gaussians which will give you multimodal distributions. Another important thing to note about a Multivariate Gaussian is that, in higher dimensions, the distribution does not look or behave like you expect in 1D and 2D cases. This is due to the <a href="https://www.inference.vc/high-dimensional-gaussian-distributions-are-soap-bubble/">Gaussian Soap Bubble Effect</a>.
 </div>
 
 Along with <span>$P(z)$, we choose a sufficiently complex function $f_{\theta}$ with parameters $\theta$. The input to $f_{\theta}$ is a sample of latent variable $z$ and the outputs are numbers used to parametrize another different simple parametric probability distribution - let’s say another multivariate isotropic Gaussian PDF. Let’s denote the conditional PDF of $X$ given $z$ as <span>$P_{\theta}(x | z)$. Now, sampling a data point involves 
