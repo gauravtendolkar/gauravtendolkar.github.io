@@ -33,7 +33,7 @@ Even for the task of generating $32\times 32$ resolution RGB images, the random 
 
 <div class="callout">
 💁 <b>Some Common Notations</b><br/>
-Capital letters, like $X$, denote a random variable. Small letters, like $x$, denote a particular value of the random variable. <span>$P(x)$</span> denotes the Probability Distribution Function (PDF) of random variable $X$. It is a function, not a value. On other hand, <span>$P(X = x)$</span> denotes the value of PDF when random variable $X$ has value $x$. The notation <span>$P(x; \theta)$</span> is also a PDF but it additionally means that means that the probability of random variable $X$ taking value $x$ depends on the value of $x$ and parameters $\theta$. <span>$P(x|\theta)$</span> denotes the conditional PDF of $X$ for a given $\theta$. $C(x)$</span> denotes the Cumulative Distribution Function (CDF) of random variable $X$.
+Capital letters, like $X$, denote a random variable. Small letters, like $x$, denote a particular value of the random variable. <span>$P(x)$</span> denotes the Probability Distribution Function (PDF) of random variable $X$. It is a function, not a value. On other hand, <span>$P(X = x)$</span> denotes the value of PDF when random variable $X$ has value $x$. The notation <span>$P(x; \theta)$</span> is also a PDF but it additionally means that means that the probability of random variable $X$ taking value $x$ depends on the value of $x$ and parameters $\theta$. <span>$P(x|\theta)$</span> denotes the conditional PDF of $X$ for a given $\theta$. $C(x)$ denotes the Cumulative Distribution Function (CDF) of random variable $X$.
 
 </div>
 
@@ -193,3 +193,5 @@ So to sample data points similar to true distribution, we need to find $f_{\thet
 Such encoder decoder architecture is a very popular paradigm of generative models. Not only do they give us a latent space succinctly capturing patterns from high dimensional data, but also a probability distribution complex enough to model data and an efficient way to sample from it.
 
 This dual optimization approach used to find parameters of encoder and decoder is called variational inference. Variational Auto-Encoders (VAEs) are a popular example of encoder-decoder architecture using variational inference to find parameters of both. Another example is Diffusion models which we will discuss in later part this series.
+
+We will learn more about variational inference in the next post in this series.
