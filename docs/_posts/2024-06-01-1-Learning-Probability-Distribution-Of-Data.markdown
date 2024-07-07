@@ -23,7 +23,7 @@ We don’t know the function <span>$P^*(x)$</span> but we do have samples from i
 Using that dataset, we wish to find an approximation to this <span>$P^*(x)$. The approximation is another probability distribution function - either a parametric one <span>$P(x; \theta)$</span> with parameters $\theta$, or a non-parametric PDF. 
 
 <div class="callout">
-🤔 <b>Why not just sample random images from the dataset? Why estimate a probability distribution to sample from?</b>
+🤔 <b>Why not just sample random images from the dataset? Why estimate a probability distribution to sample from?</b><br/>
 An obvious advantage is that we can generate interesting images that are outside our limited dataset. But there is more to this approach. We can also achieve tasks like in-painting or out-painting where we are provided with only a part of the image and we need to complete the image based on that part. We can perform de-noising, compression, image super-resolution and many more tasks. Additionally, if our distributions employ latent random variables,  we can use the latent space to cluster images or vary isolated properties of images. We shall learn about these approaches later.
 </div>
 
@@ -32,7 +32,7 @@ To find a parametric distribution function, we first define a function of $x$ an
 Even for the task of generating $32\times 32$ resolution RGB images, the random variable is a vector (or a matrix/tensor) of $32\times 32\times 3 = 3072$ dimensions. Therefore, we have a task of estimating a PDF over 3072 dimensional space (do not attempt to visualize). The distribution could be an extremely complicated function and it is not apparent that it takes a form that can be approximated by simple [parametric distribution functions with known properties](https://en.wikipedia.org/wiki/Category:Continuous_distributions) (like multivariate normal distribution function). But fortunately, most applications do not require a [closed form solution](https://en.wikipedia.org/wiki/Closed-form_expression) for <span>$P(x; \theta)$. 
 
 <div class="callout">
-💁 **Some Common Notations**
+💁 <b>Some Common Notations</b><br/>
 Capital letters, like $X$, denote a random variable. Small letters, like $x$, denote a particular value of the random variable. <span>$P(x)$</span> denotes the Probability Distribution Function (PDF) of random variable $X$. It is a function, not a value. On other hand, <span>$P(X = x)$</span> denotes the value of PDF when random variable $X$ has value $x$. The notation <span>$P(x; \theta)$</span> is also a PDF but it additionally means that means that the probability of random variable $X$ taking value $x$ depends on the value of $x$ and parameters $\theta$. <span>$P(x|\theta)$</span> denotes the conditional PDF of $X$ for a given $\theta$. $C(x)$</span> denotes the Cumulative Distribution Function (CDF) of random variable $X$.
 
 </div>
@@ -138,7 +138,7 @@ A common trick is to use Probabilistic Graphical Models. Probabilistic Graphical
 We imagine a new random variable $Z$ which has one of these simple parametric probability distribution functions - let’s say a multivariate isotropic Gaussian PDF.  Do not worry about what $Z$ represents. It is just an invented random variable that will make our problems easier to solve. As we formulate the mathematics, we will arrive at an intuition for $Z$. We will call this variable a latent variable and denote its PDF as <span>$P(z)$. <span>$P(z)$</span> can be used to sample different values $z$ of random variable $Z$.
 
 <div class="callout">
-📝 **Short note on Multivariate Gaussian**
+📝 <b>Short note on Multivariate Gaussian</b><br/>
 First, something that confuses me if I am not paying attention - Multivariate Gaussian is different from mixture of Gaussians. Multivariate Gaussian is a Gaussian distribution over a multidimensional vector but has a single mode. You can also have a mixture of multivariate Gaussians which will give you multimodal distributions. Another important thing to note about a Multivariate Gaussian is that, in higher dimensions, the distribution does not look or behave like you expect in 1D and 2D cases. This is due to the [Gaussian Soap Bubble Effect](https://www.inference.vc/high-dimensional-gaussian-distributions-are-soap-bubble/).
 
 </div>
@@ -150,7 +150,7 @@ Along with <span>$P(z)$, we choose a sufficiently complex function $f_{\theta}$ 
 3. Sampling a data point $x$ from $N(\mu, \sigma)$. Like step 1, this step is also computationally tractable.
 
 <div class="callout">
-🤔 **Why use multivariate isotropic Gaussian distributions? Will other distributions work?** 
+🤔 <b>Why use multivariate isotropic Gaussian distributions? Will other distributions work?</b><br/> 
 We choose a multivariate isotropic Gaussian PDF for <span>$P(z)$</span> and <span>$P_{\theta}(x | z)$</span> because, even though we do not have a closed form solution for the inverse CDF of a Gaussian, we still have efficient algorithms to sample from them. One such method is the Box-Muller method that lets you create random samples from a Gaussian distribution given samples from a uniform distribution. Java’s [Random](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html#nextGaussian) class uses this method for sampling numbers from standard Gaussian. The method can be easily modified for the multivariate isotropic case.
 
 </div>
