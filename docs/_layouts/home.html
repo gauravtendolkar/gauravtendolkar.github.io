@@ -62,7 +62,7 @@ layout: default
             </a>
             {%- endif -%}
           </h3>
-          {%- if site.show_excerpts -%} {{ post.excerpt }} {%- endif -%}
+          {%- if site.show_excerpts -%} {{ post.excerpt | truncate(50)  }} {%- endif -%}
         </li>
         {%- endfor -%}
       </ul>
