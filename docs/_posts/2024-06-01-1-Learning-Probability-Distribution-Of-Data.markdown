@@ -150,7 +150,7 @@ Along with <span>$P(z)$, we choose a sufficiently complex function $f_{\theta}$ 
 
 <div class="callout">
 🤔 <b>Why use multivariate isotropic Gaussian distributions? Will other distributions work?</b><br/> 
-We choose a multivariate isotropic Gaussian PDF for <span>$P(z)$</span> and <span>$P_{\theta}(x | z)$</span> because, even though we do not have a closed form solution for the inverse CDF of a Gaussian, we still have efficient algorithms to sample from them. One such method is the Box-Muller method that lets you create random samples from a Gaussian distribution given samples from a uniform distribution. Java’s [Random](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html#nextGaussian) class uses this method for sampling numbers from standard Gaussian. The method can be easily modified for the multivariate isotropic case.
+We choose a multivariate isotropic Gaussian PDF for <span>$P(z)$</span> and <span>$P_{\theta}(x | z)$</span> because, even though we do not have a closed form solution for the inverse CDF of a Gaussian, we still have efficient algorithms to sample from them. One such method is the Box-Muller method that lets you create random samples from a Gaussian distribution given samples from a uniform distribution. Java’s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html#nextGaussian">Random</a> class uses this method for sampling numbers from standard Gaussian. The method can be easily modified for the multivariate isotropic case.
 
 </div>
 
