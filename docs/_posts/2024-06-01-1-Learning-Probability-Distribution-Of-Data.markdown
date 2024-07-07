@@ -2,7 +2,7 @@
 layout: post
 title: "1. Learning Probability Distribution of Data"
 posted: "1 June, 2024"
-categories: Understanding-Deep-Generative-Modelling
+categories: Deep-Generative-Modelling
 live: true
 ---
 
