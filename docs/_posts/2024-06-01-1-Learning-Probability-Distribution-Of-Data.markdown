@@ -16,7 +16,7 @@ Note that we are looking for probabilistic functions (also known as Probability 
 
 ## Data Generating Process
 
-We assume that the data (in our case - a 32x32 grid of pixel values), is a random variable (denoted as $X$) generated from a Probability Distribution Function (PDF) unknown to us. We call it the true probability distribution function and denote it by $P^{*}(x)$. We don’t know the function $P^*(x)$ but we do have samples from it (which is our dataset of images). Using that dataset, we wish to find an approximation to this $P^*(x)$. The approximation is another probability distribution function - either a parametric one $P(x; \theta)$ with parameters $\theta$, or a non-parametric PDF. 
+We assume that the data (in our case - a 32x32 grid of pixel values), is a random variable (denoted as $X$) generated from a Probability Distribution Function (PDF) unknown to us. We call it the true probability distribution function and denote it by $P^*(x)$. We don’t know the function $P^*(x)$ but we do have samples from it (which is our dataset of images). Using that dataset, we wish to find an approximation to this $P^*(x)$. The approximation is another probability distribution function - either a parametric one $P(x; \theta)$ with parameters $\theta$, or a non-parametric PDF. 
 
 <div class="callout callout-info" markdown="span">
 🤔 **Why not just sample random images from the dataset? Why estimate a probability distribution to sample from?**
