@@ -287,7 +287,7 @@ By 200th epoch, the decoder has started generating images that show hints of bei
 
 ![Results](/assets/images/Implementing_VAE_With_PyTorch/3.png)
 
-By 350th epoch, we start seeing blurry reconstructions of flowers (top row are original, bottom are their reconstructions),
+By 350th epoch, we start seeing blurry reconstructions of flowers (odd rows are original, even rows are their reconstructions),
 
 ![Results](/assets/images/Implementing_VAE_With_PyTorch/4.png)
 ![Results](/assets/images/Implementing_VAE_With_PyTorch/5.png)
