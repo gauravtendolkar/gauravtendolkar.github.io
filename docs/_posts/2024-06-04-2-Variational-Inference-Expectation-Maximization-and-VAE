@@ -16,7 +16,7 @@ But since <span>$P_{\theta}(z | x)$</span> is intractable, we cannot use the EM 
 
 ## Evidence Lower Bound (ELBO)
 
-Let’s start by analyzing part 2 of our objective - making approximate posterior <span>$Q(z|x,\phi)$</span> similar to the posterior <span>$P(z|x,\theta)$</span>. A common metric for measuring similarity between 2 probability distributions is the [Kullback-Leibler Divergence](https://en.wikipedia.org/wiki/Kullback–Leibler_divergence) (KL Divergence). KL Divergence, denoted as <span>$D_{KL}( \ P \ || \ Q \ )$</span>, is the expected excess [surprise](https://en.wikipedia.org/wiki/Information_content) from using $Q$ **as a distribution when the actual distribution is $P$. KL Divergence is not symmetric and <span>$D_{KL}( \ P \ || \ Q \ ) \neq D_{KL}( \ Q \ || \ P \ )$</span>.
+Let’s start by analyzing part 2 of our objective - making approximate posterior <span>$Q(z|x,\phi)$</span> similar to the posterior <span>$P(z|x,\theta)$</span>. A common metric for measuring similarity between 2 probability distributions is the [Kullback-Leibler Divergence](https://en.wikipedia.org/wiki/Kullback–Leibler_divergence) (KL Divergence). KL Divergence, denoted as <span>$D_{KL}( \ P \ || \ Q \ )$</span>, is the expected excess [surprise](https://en.wikipedia.org/wiki/Information_content) from using $Q$ as a distribution when the actual distribution is $P$. KL Divergence is not symmetric and <span>$D_{KL}( \ P \ || \ Q \ ) \neq D_{KL}( \ Q \ || \ P \ )$</span>.
 
 We will use the reverse KL divergence between <span>$P$  and <span>$Q$ so that the areas in latent space which are truly low probability, but are assigned high probability by <span>$Q$, are penalized more. The reverse KL Divergence between the 2 posteriors can be written as
 
@@ -148,11 +148,10 @@ where $z_i$ is a single sample from <span>$Q(z|x_i,\phi)$</span>.
 
 The first term in the loss, <span>$\log P(x_i|z_i,\theta)$</span> is called the reconstruction error. This is because, given a data point $x_i$, we sample a $z_i$ from <span>$Q(z|x_i,\phi)$</span>. Then we evaluate the probability of the original $x_i$ being reconstructed from <span>$P(x|z_i,\theta)$</span>.
 
-<aside>
-🤔 **I understand term reconstruction, but why the term error? Shouldn’t it be reconstruction probability?**
+<div class="callout">
+🤔 <b>I understand term reconstruction, but why the term error? Shouldn’t it be reconstruction probability?</b><br/>
 For some standard distributions (like Gaussian), minimizing the log probability is equivalent to minimizing the squared error between data point and the mean of the distribution. Try it out by expanding <span>$\log P(x_i|z_i,\theta)$</span> by substituting the formula for Gaussian and mean and standard deviation ${\mu_i, \sigma_i} = f_{\theta}(z_i)$</span>, our decoder function.
-
-</aside>
+</div>
 
 The second term <span>$D_{KL}( \ Q(z|x_i,\phi) \ || \ P(z) \ )$</span> can be viewed as a regularizing term that says the approximate posterior <span>$Q(z|x_i,\phi)$</span> should be close to the prior <span>$P(z)$</span>. Prior <span>$P(z)$</span> is usually a simple distribution like a isotropic, zero mean, unit variance, multivariate Gaussian.
 
