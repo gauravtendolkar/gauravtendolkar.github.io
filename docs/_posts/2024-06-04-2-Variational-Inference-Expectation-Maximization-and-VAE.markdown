@@ -126,7 +126,7 @@ $$
 \end{aligned}
 $$
 
-now only $\int Q(z|x_i,\phi)\log P(x_i|z,\theta)dz$ part of the equation is intractable while <span>$D_{KL}( \ Q(z|x_i,\phi) \ || \ P(z) \ )$</span> is easy to compute for a given $x_i$. So a better estimate would be
+now only <span>$\int Q(z|x_i,\phi)\log P(x_i|z,\theta)dz$</span> part of the equation is intractable while <span>$D_{KL}( \ Q(z|x_i,\phi) \ || \ P(z) \ )$</span> is easy to compute for a given $x_i$. So a better estimate would be
 
 $$
 \begin{aligned}
@@ -151,7 +151,7 @@ The first term in the loss, <span>$\log P(x_i|z_i,\theta)$</span> is called the 
 
 <div class="callout">
 🤔 <b>I understand term reconstruction, but why the term error? Shouldn’t it be reconstruction probability?</b><br/>
-For some standard distributions (like Gaussian), minimizing the log probability is equivalent to minimizing the squared error between data point and the mean of the distribution. Try it out by expanding <span>$\log P(x_i|z_i,\theta)$</span> by substituting the formula for Gaussian and mean and standard deviation ${\mu_i, \sigma_i} = f_{\theta}(z_i)$</span>, our decoder function.
+For some standard distributions (like Gaussian), minimizing the log probability is equivalent to minimizing the squared error between data point and the mean of the distribution. Try it out by expanding <span>$\log P(x_i|z_i,\theta)$</span> by substituting the formula for Gaussian and mean and standard deviation ${\mu_i, \sigma_i} = f_{\theta}(z_i)$, our decoder function.
 </div>
 
 The second term <span>$D_{KL}( \ Q(z|x_i,\phi) \ || \ P(z) \ )$</span> can be viewed as a regularizing term that says the approximate posterior <span>$Q(z|x_i,\phi)$</span> should be close to the prior <span>$P(z)$</span>. Prior <span>$P(z)$</span> is usually a simple distribution like a isotropic, zero mean, unit variance, multivariate Gaussian.
@@ -160,4 +160,4 @@ The final objective function could have additional term to help with the optimiz
 
 ## Variational Auto-Encoders (VAE)
 
-The original VAE paper makes 2 significant changes to the problem. These changes enable us to estimate $\theta$ and $\phi$ using mini batch stochastic gradient descent rather than using the EM algorithm.
+The original VAE paper makes 2 significant changes to the problem. These changes enable us to estimate $\theta$ and $\phi$ using mini batch stochastic gradient descent rather than using the EM algorithm. In the next post, we shall learn more about implementation of variational inference using VAEs.
