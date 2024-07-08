@@ -270,7 +270,7 @@ We will introduce a few more modifications that will help train the VAE with SGD
 
 ### Modifications to aide SGD
 
-1. If we train the VAE with the ELBO loss, we will observe the the second part of ELBO, i.e. the KL divergence between posterior and prior goes to 0 much faster than the reconstruction error. Once that happens, the latent vector is always sampled from a standard normal Gaussian and the reconstructions will all look similar brown and heavily blurred images. To counter that, we introduce a training scheme that places very low weight on the KL divergence part of ELBO loss during initial stages of training. Experimental research has suggested a few different types of schemes for varying the weights of the two parts of the ELBO loss. - https://openreview.net/forum?id=Sy2fzU9gl
+1. If we train the VAE with the ELBO loss, we will observe the the second part of ELBO, i.e. the KL divergence between posterior and prior goes to 0 much faster than the reconstruction error. Once that happens, the latent vector is always sampled from a standard normal Gaussian and the reconstructions will all look similar brown and heavily blurred images. To counter that, we introduce a training scheme that places very low weight on the KL divergence part of ELBO loss during initial stages of training. [Experimental research](https://openreview.net/forum?id=Sy2fzU9gl) has suggested a few different types of schemes for varying the weights of the two parts of the ELBO loss.
 2. We will use [Batch Normalization](http://proceedings.mlr.press/v37/ioffe15.html) layers whose dynamics have not been part of the derivations we have discussed till now. The original paper which introduced batch normalization does a great job of explaining how it aides SGD.
 
 ## Results
