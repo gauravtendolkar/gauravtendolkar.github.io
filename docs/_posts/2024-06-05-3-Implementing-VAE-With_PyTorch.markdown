@@ -16,22 +16,22 @@ Throughout this series, we will follow some guidelines on structuring our code. 
 
 ```markdown
 root
-  experiments.ipynb
-	vae_training.py
-	gan_training.py
-	...
-	datasets
-		dtd
-		preprocessing.py
-	vae
-		layers.py
-		losses.py
-		vae.py
-	gan
-		layers.py
-		losses.py
-		gan.py
-	...
+    experiments.ipynb
+    vae_training.py
+    gan_training.py
+    ...
+    datasets
+        dtd
+        preprocessing.py
+    vae
+        layers.py
+        losses.py
+        vae.py
+    gan
+        layers.py
+        losses.py
+        gan.py
+    ...
 ```
 
 The root directory will hold all the code used in this series. 
@@ -102,17 +102,17 @@ optimiser = torch.optim.Adam(model.parameters(), lr=0.0001)
 batch_num = 0
 for epoch in range(num_epochs):
     for i, (train_features, train_labels) in enumerate(train_dataloader):
-				# Step 1: zero gradients of optimizer
+        # Step 1: zero gradients of optimizer
         optimiser.zero_grad()
-				# Step 2: forward pass through the model
+        # Step 2: forward pass through the model
         reconstructions, means, log_vars = model(train_features)
-				# Step 3: calculate loss
+        # Step 3: calculate loss
         beta, kl_loss, reconstruction_loss, total_loss = loss(train_features, reconstructions, means, log_vars)
         # Step 4: write loss to tensorboard
-				writer.add_scalars("loss", {"KL Loss": kl_loss, "Reconstruction Loss": reconstruction_loss, "Total Loss": total_loss}, batch_num)
+        writer.add_scalars("loss", {"KL Loss": kl_loss, "Reconstruction Loss": reconstruction_loss, "Total Loss": total_loss}, batch_num)
         # Step 5: compute gradients
-				total_loss.backward()
-				# Step 6: apply gradient descent step
+        total_loss.backward()
+        # Step 6: apply gradient descent step
         optimiser.step()
         batch_num += 1
 
@@ -143,17 +143,17 @@ class VAE(nn.Module):
         self.decoder = Decoder(image_resolution, image_channels, latent_size)
 
     def forward(self, x):
-				# x is batch of images of shape [batch_size, height, width, channels]
+        # x is batch of images of shape [batch_size, height, width, channels]
         mean, log_var = self.encoder(x)
-				# Encoder generates a [batch_size, latent_size] shaped mean 
-				# and [batch_size, latent_size] shaped log of variance 
+        # Encoder generates a [batch_size, latent_size] shaped mean 
+        # and [batch_size, latent_size] shaped log of variance 
         latent_sample = self.sample_latent(mean, log_var)
-				# latent_sample has shape [batch_size, latent_size]
-				# sampled from an isotropic multivariate Gaussian distribution
-				# described by mean and log_var
+        # latent_sample has shape [batch_size, latent_size]
+        # sampled from an isotropic multivariate Gaussian distribution
+        # described by mean and log_var
         reconstruction = self.decoder(latent_sample)
-				# decoder reconstructs [batch_size, height, width, channels]
-				# from batch_size samples from latent space
+        # decoder reconstructs [batch_size, height, width, channels]
+        # from batch_size samples from latent space
         return reconstruction, mean, log_var
 ```
 
@@ -257,15 +257,15 @@ class ELBOLoss(nn.Module):
 
 ## Practical Aspects of VAE
 
-In practice, the entire domain of deep learning is about aiding stochastic mini batch gradient descent (SGD) to solve our optimization problem. In order to do this, we will introduce some “hacks”. These are modifications to the objective function or training procedure in order to either reduce/parallelize computation or to aide stochastic mini batch gradient descent. We have already seen one such hack the the original VAE paper used where we [sample just 1 latent vector](https://www.notion.so/Variational-Inference-Expectation-Maximization-and-VAE-d853f353315d4e20b2fa7bccd7ba5367?pvs=21) to get a Monte Carlo estimate for ELBO. 
+In practice, the entire domain of deep learning is about aiding stochastic mini batch gradient descent (SGD) to solve our optimization problem. In order to do this, we will introduce some “hacks”. These are modifications to the objective function or training procedure in order to either reduce/parallelize computation or to aide stochastic mini batch gradient descent. In the previous post, we have seen one such hack that the original VAE paper used where we sample just 1 latent vector to get a Monte Carlo estimate for ELBO. 
 
 We will introduce a few more modifications that will help train the VAE with SGD. They are summarized here -
 
 ### Modifications to reduce computation
 
 1. We will reduce the image size. For the purposes of this series, we will use images of dimension 64x64 pixels. This is just enough resolution to capture our patterns.
-2. We will modify the conditional distribution $P(x | z, \theta)$ as one of the two - 
-    1. A 4,096 (64 x 64) dimensional Gaussian with constant diagonal covariance matrix. With this, the output of our decoder function is just the mean of the Gaussian. Since covariance is constant, minimizing $\log P(x_i|z_i,\theta)$, is equivalent to minimizing the mean squared error between the pixels in output of our decoder (the mean) and the input image that led to the latent vector and the reconstruction mean. This transforms the first part of our ELBO loss into a mean squared error between matrices with 4,096 entries.
+2. We will modify the conditional distribution <span>$P(x | z, \theta)$</span> as one of the two - 
+    1. A 4,096 (64 x 64) dimensional Gaussian with constant diagonal covariance matrix. With this, the output of our decoder function is just the mean of the Gaussian. Since covariance is constant, minimizing <span>$\log P(x_i|z_i,\theta)$</span>, is equivalent to minimizing the mean squared error between the pixels in output of our decoder (the mean) and the input image that led to the latent vector and the reconstruction mean. This transforms the first part of our ELBO loss into a mean squared error between matrices with 4,096 entries.
     2. A joint distribution of 4.096 independent Bernoulli distributions, that is, each pixel in the image has a Bernoulli distribution that is independent of other pixels. For this, the values of input image are normalized to fall between 0 and 1. Each element of output of decoder is also restricted to be between 0 and 1 (using a Sigmoid activation). This transforms the first part of our ELBO loss to sum of binary cross entropy between each pixel of the two images.
 
 ### Modifications to aide SGD
