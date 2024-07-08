@@ -5,6 +5,7 @@ posted: "4 June, 2024"
 categories: Deep-Generative-Modelling
 live: true
 ---
+
 In part 1 of this series, we converted the problem of finding an approximate parametric probability distribution into a dual optimization problem. That is, finding the $\theta$ and $\phi$ that simultaneously 
 
 1. Maximize the marginal likelihood of data <span>$P_{\theta}(x)$</span>
