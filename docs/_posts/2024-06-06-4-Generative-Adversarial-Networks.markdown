@@ -31,33 +31,33 @@ With parametric models optimized using mini batch stochastic gradient descent, t
 **Adversarial training algorithm**
 
 ---
-
+```
 Initialize generator parameters $\theta$
 
 Initialize discriminator parameters $\phi$
 
 **for** number of training iterations $n$
 
-  **for** $k$ steps
+    **for** $k$ steps
+
+        sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
+
+        sample $m$ samples of real data $X$ as $\{x_1, x_2, ..., x_m\}$
+
+        update discriminator parameters $\phi$ by ascending the gradient
+
+        $\nabla_{\phi} ( \ \frac{1}{m}\sum_{i=1}^m \log(D_{\phi}(x_i)) + \log(1-D_{\phi}(G_{\theta}(z_i))) \ )$
+
+    **end for**
 
     sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
 
-    sample $m$ samples of real data $X$ as $\{x_1, x_2, ..., x_m\}$
+    update generator parameters $\theta$ by descending the gradient
 
-    update discriminator parameters $\phi$ by ascending the gradient
-
-    $\nabla_{\phi} ( \ \frac{1}{m}\sum_{i=1}^m \log(D_{\phi}(x_i)) + \log(1-D_{\phi}(G_{\theta}(z_i))) \ )$
-
-  **end for**
-
-  sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
-
-  update generator parameters $\theta$ by descending the gradient
-
-  $\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
+    $\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
 
 **end for**
-
+```
 ---
 
 
