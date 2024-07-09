@@ -31,7 +31,6 @@ With parametric models optimized using mini batch stochastic gradient descent, t
 **Adversarial training algorithm**
 
 ---
-```
 Initialize generator parameters $\theta$
 
 Initialize discriminator parameters $\phi$
@@ -57,7 +56,6 @@ Initialize discriminator parameters $\phi$
     $\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
 
 **end for**
-```
 ---
 
 
