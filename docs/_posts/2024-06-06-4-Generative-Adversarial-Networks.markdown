@@ -56,6 +56,7 @@ update generator parameters $\theta$ by descending the gradient
 $\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
 
 **end for**
+
 ---
 
 
