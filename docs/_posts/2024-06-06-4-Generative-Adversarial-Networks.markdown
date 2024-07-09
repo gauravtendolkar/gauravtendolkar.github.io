@@ -6,7 +6,7 @@ categories: Deep-Generative-Modelling
 live: true
 ---
 
-GANs were first introduced in 2014, less than a year after VAEs, with the paper [*Generative Adversarial Networks](https://arxiv.org/abs/1406.2661).* GAN is not a type of neural network, but a framework for estimating a generative model. In this framework, we train two models, called generator and discriminator, in an adversarial fashion. There is no restriction on the forms the generator and discriminator. If they are parametric and differentiable, we can use gradient descent to train learn the parameters from data. For example, you could have a [VAE as the generator](https://arxiv.org/abs/1512.09300) by modifying the loss function of the VAE appropriately.
+GANs were first introduced in 2014, less than a year after VAEs, with the paper [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661).* GAN is not a type of neural network, but a framework for estimating a generative model. In this framework, we train two models, called generator and discriminator, in an adversarial fashion. There is no restriction on the forms the generator and discriminator. If they are parametric and differentiable, we can use gradient descent to train learn the parameters from data. For example, you could have a [VAE as the generator](https://arxiv.org/abs/1512.09300) by modifying the loss function of the VAE appropriately.
 
 ## Adversarial Training
 
@@ -38,27 +38,28 @@ Initialize discriminator parameters $\phi$
 
 **for** number of training iterations $n$
 
-**for** $k$ steps
+  **for** $k$ steps
 
-sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
+    sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
 
-sample $m$ samples of real data $X$ as $\{x_1, x_2, ..., x_m\}$
+    sample $m$ samples of real data $X$ as $\{x_1, x_2, ..., x_m\}$
 
-update discriminator parameters $\phi$ by ascending the gradient
+    update discriminator parameters $\phi$ by ascending the gradient
 
-$\nabla_{\phi} ( \ \frac{1}{m}\sum_{i=1}^m \log(D_{\phi}(x_i)) + \log(1-D_{\phi}(G_{\theta}(z_i))) \ )$
+    $\nabla_{\phi} ( \ \frac{1}{m}\sum_{i=1}^m \log(D_{\phi}(x_i)) + \log(1-D_{\phi}(G_{\theta}(z_i))) \ )$
 
-**end for**
+  **end for**
 
-sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
+  sample $m$ samples of latent vector $Z$ as $\{z_1, z_2, ..., z_m\}$
 
-update generator parameters $\theta$ by descending the gradient
+  update generator parameters $\theta$ by descending the gradient
 
-$\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
+  $\nabla_{\theta} \frac{1}{m}\sum_{i=1}^m \log(1-D_{\phi}(G_{\theta}(z_i)))$
 
 **end for**
 
 ---
+
 
 ## Theoretical guarantees
 
