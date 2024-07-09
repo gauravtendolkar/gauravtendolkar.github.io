@@ -5,13 +5,11 @@ layout: default
 <div class="home">
   <div class="flex-container">
     <div style="margin-right: 30px; min-width: 100px">
-      <img
-        src="/assets/images/pp.jpg"
-        style="border-radius: 50%; width: 100px; height: 100px"
-      />
+      <img src="/assets/images/pp.jpg" style="border-radius: 50%; width: 100px; height: 100px" />
     </div>
     <div>
-      Welcome to my personal website. I currently work at Microsoft building AI features for <a href="https://designer.microsoft.com" target="_blank">Microsoft Designer</a>.
+      Welcome to my personal website. I currently work at Microsoft building AI features for <a
+        href="https://designer.microsoft.com" target="_blank">Microsoft Designer</a>.
     </div>
   </div>
   <h2 class="post-list-heading" style="margin-top: 30px">Books</h2>
@@ -22,14 +20,14 @@ layout: default
     <div>
       <div>
         Eight brief, jargon-free lessons for a strong computer science
-        foundation. Understand Everything - From Hardware to AI!
+        foundation.
+        <br />
+        How does an inanimate machine, essentially a rock, understand our commands? How do billions of such machines
+        seamlessly communicate with each other? And they are achieving human-like intelligence? Understand the internal
+        workings of everything - from computer hardware to AI!
       </div>
       <br />
-      <button
-        class="action-button"
-        role="button"
-        onclick="window.open('https://amazon.com/dp/B0D2RZJCN8','_blank')"
-      >
+      <button class="action-button" role="button" onclick="window.open('https://amazon.com/dp/B0D2RZJCN8','_blank')">
         Buy on Amazon for $2.99
       </button>
     </div>
@@ -62,7 +60,7 @@ layout: default
             </a>
             {%- endif -%}
           </h3>
-          {%- if site.show_excerpts -%} {{ post.excerpt | truncate(150)  }} {%- endif -%}
+          {%- if site.show_excerpts -%} {{ post.excerpt | truncate(150) }} {%- endif -%}
         </li>
         {%- endfor -%}
       </ul>
