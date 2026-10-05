@@ -149,6 +149,16 @@ a { color: inherit; }
   .site-nav { gap: 18px; }
   .site-nav__link { font-size: 15px; }
 }
+/* Header: small phones — tighten so wordmark + nav fit on one line */
+@media (max-width: 420px) {
+  .site-header__inner { gap: 12px; }
+  .wordmark { font-size: 14px; letter-spacing: 0.06em; }
+  .site-nav { gap: 14px; }
+  .site-nav__link { font-size: 14px; }
+}
+@media (max-width: 340px) {
+  .site-header__inner { flex-wrap: wrap; height: auto; padding-top: 18px; padding-bottom: 12px; row-gap: 6px; }
+}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -212,6 +222,19 @@ a { color: inherit; }
   height: 96px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Home hero: mobile — stack photo above a full-width headline */
+@media (max-width: 720px) {
+  .home-hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 48px 0 40px;
+  }
+  .home-hero__title { font-size: clamp(22px, 6vw, 28px); line-height: 1.25; }
+  .home-hero__avatar { width: 104px; height: 104px; }
 }
 
 .featured {
