@@ -1,0 +1,16 @@
+# Books shown on /books/. Editable from Pages CMS ("Books").
+- title: Behind the Interface
+  subtitle: A conceptual guide to the inner workings of computers and their ecosystem
+  cover: /assets/images/book.png
+  tagline: Eight brief, jargon-free lessons for a strong computer science foundation.
+  description: >-
+    *How does an inanimate machine, essentially a rock, understand our commands? How do billions of such machines
+    seamlessly communicate with each other? And they are achieving human-like intelligence?* Understand the internal
+    workings of everything - from computer hardware to AI!
+  buy_label: Buy on Amazon for $2.99
+  buy_url: https://amazon.com/dp/B0D2RZJCN8
+  website: https://gauravtendolkar.github.io/BehindTheInterface/
+  badge:
+    image: https://bookraid.com/badges/general_non_fiction.png
+    url: https://bookraid.com/categories/24/general-non-fiction
+    alt: General Non-Fiction Bestseller on BookRaid

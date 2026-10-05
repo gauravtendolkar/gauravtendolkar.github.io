@@ -1,0 +1,131 @@
+# Pages CMS configuration — https://pagescms.org
+# Sign in at https://app.pagescms.org with GitHub. Only accounts with write
+# access to this repository can open it, edit, or publish.
+# Every save is a commit to `main`; GitHub Pages rebuilds the site automatically.
+
+media:
+  input: docs/assets/images
+  output: /assets/images
+
+settings:
+  content:
+    merge: true # keep any front matter keys not listed below
+
+content:
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: docs/_posts
+    filename:
+      template: "{year}-{month}-{day}-{primary}.markdown"
+      field: create
+    view:
+      fields: [title, posted, categories, live]
+      primary: title
+      sort: [title]
+      search: [title, categories]
+    fields:
+      - name: layout
+        type: string
+        hidden: true
+        default: post
+      - name: title
+        label: Title
+        type: string
+        required: true
+        description: 'Number posts in a series like "7. My Post Title" — the list is sorted by title.'
+      - name: posted
+        label: Date shown on the site
+        type: string
+        description: 'e.g. "May 28, 2024", or "Coming Soon..." for an upcoming post.'
+      - name: categories
+        label: Series
+        type: string
+        required: true
+        default: Super-Fast-LLM-Training
+        description: "Series slug, words joined by dashes (e.g. Super-Fast-LLM-Training, Deep-Generative-Modelling)."
+      - name: live
+        label: Live
+        type: boolean
+        default: false
+        description: "Off = listed as an upcoming (unclickable) post. On = published and readable."
+      - name: featured
+        label: Featured on home page
+        type: boolean
+        default: false
+        description: "If no post is featured, the newest live post is."
+      - name: body
+        label: Content (Markdown)
+        type: code
+        options:
+          format: markdown
+        description: 'Markdown + LaTeX ($inline$, $$display$$), ```python code fences, ```mermaid diagrams. Images: upload in Media, then use ![alt](/assets/images/your-file.png).'
+
+  - name: books
+    label: Books
+    type: file
+    path: docs/_data/books.yml
+    list: true
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: subtitle
+        type: string
+      - name: cover
+        type: image
+      - name: tagline
+        type: text
+      - name: description
+        type: text
+        description: Markdown supported.
+      - name: buy_label
+        type: string
+      - name: buy_url
+        type: string
+      - name: website
+        type: string
+      - name: badge
+        type: object
+        fields:
+          - name: image
+            type: string
+          - name: url
+            type: string
+          - name: alt
+            type: string
+
+  - name: apps
+    label: Apps
+    type: file
+    path: docs/_data/apps.yml
+    list: true
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: label
+        type: string
+        description: Small label above the title, e.g. "iPhone · Utilities".
+      - name: subtitle
+        type: string
+      - name: icon
+        type: image
+        description: Square app icon.
+      - name: screenshots
+        type: image
+        list: true
+        description: Up to 3 phone screenshots are shown. If none, `image` is used.
+      - name: image
+        type: image
+      - name: description
+        type: text
+        description: Markdown supported.
+      - name: links
+        type: object
+        list: true
+        fields:
+          - name: label
+            type: string
+          - name: url
+            type: string

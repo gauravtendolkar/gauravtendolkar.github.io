@@ -1,26 +1,88 @@
 ---
 layout: default
 ---
+{%- assign series = page.categories | first -%}
+{%- comment -%} Lead = first <p> of the rendered post (works regardless of line endings). {%- endcomment -%}
+{%- assign body_html = content | strip -%}
+{%- assign excerpt_html = "" -%}
+{%- assign use_lead = false -%}
+{%- if page.lead != false and body_html contains "</p>" -%}
+  {%- assign first_chunk = body_html | split: "</p>" | first -%}
+  {%- assign opener = first_chunk | slice: 0, 3 -%}
+  {%- if opener == "<p>" -%}
+    {%- assign excerpt_html = first_chunk | append: "</p>" -%}
+    {%- assign use_lead = true -%}
+  {%- endif -%}
+{%- endif -%}
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    <p class="post-meta">
-      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        {{ page.date | date: date_format }}
-      </time>
-      {%- if page.author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
-      {%- endif -%}</p>
+  <header class="page-wrapper article-hero">
+    {%- if series -%}
+    <a class="article-hero__kicker" href="{{ "/" | relative_url }}#{{ series | slugify }}">{{ series | replace: "-", " " }} Series</a>
+    {%- else -%}
+    <a class="article-hero__kicker" href="{{ "/" | relative_url }}">Blog</a>
+    {%- endif -%}
+
+    <div class="article-grid article-hero__top">
+      <div class="article-hero__art">
+        {%- include art.html post=page -%}
+      </div>
+      <h1 class="article-hero__title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    </div>
+
+    <hr class="rule-dark">
+
+    <div class="article-grid article-hero__meta">
+      <p class="article-hero__date">
+        Published
+        <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+          {%- if page.posted -%}{{ page.posted }}{%- else -%}{{ page.date | date: "%b %d, %Y" }}{%- endif -%}
+        </time>
+      </p>
+      {%- if use_lead -%}
+      <div class="article-hero__lead">{{ excerpt_html }}</div>
+      {%- endif -%}
+    </div>
   </header>
 
-  <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
+  <div class="page-wrapper">
+    <div class="article-grid">
+      <div></div>
+      <div class="post-content e-content article-body" itemprop="articleBody">
+        {%- if use_lead -%}
+          {{ body_html | remove_first: excerpt_html }}
+        {%- else -%}
+          {{ content }}
+        {%- endif -%}
+      </div>
+    </div>
   </div>
 
-  {%- if site.disqus.shortname -%}
-    {%- include disqus_comments.html -%}
+  {%- if series -%}
+  {%- assign siblings = site.categories[series] | sort: "title" -%}
+  {%- if siblings.size > 1 -%}
+  <aside class="page-wrapper series-more">
+    <hr class="rule-subtle">
+    <div class="series">
+      <div class="series__label">
+        <p class="eyebrow">More in this series</p>
+        <h2 class="series__name">{{ series | replace: "-", " " }}</h2>
+      </div>
+      <ul class="post-rows post-rows--compact">
+        {%- for post in siblings -%}
+        <li class="post-row{% unless post.live == true %} is-upcoming{% endunless %}{% if post.url == page.url %} is-current{% endif %}">
+          {%- if post.live == true and post.url != page.url -%}
+          <a class="post-row__title" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          {%- else -%}
+          <span class="post-row__title">{{ post.title | escape }}</span>
+          {%- endif -%}
+          <span class="post-row__date">{% if post.url == page.url %}Reading now{% else %}{{ post.posted }}{% endif %}</span>
+        </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </aside>
+  {%- endif -%}
   {%- endif -%}
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>

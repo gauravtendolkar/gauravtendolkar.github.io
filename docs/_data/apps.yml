@@ -1,0 +1,62 @@
+# Apps shown on /apps/. Editable from Pages CMS ("Apps").
+# Screenshots/icons for iOS apps come from their App Store listings.
+- title: Ten AI
+  subtitle: Unlimited, Private AI
+  label: iPhone · Utilities
+  icon: /assets/images/apps/ten-ai/icon.png
+  screenshots:
+    - /assets/images/apps/ten-ai/screen-1.jpg
+    - /assets/images/apps/ten-ai/screen-2.jpg
+    - /assets/images/apps/ten-ai/screen-3.jpg
+  description: >-
+    100% Private, Free & Unlimited AI. No signups, No ads, No internet required. Chat with latest LLMs,
+    Transcribe Private Calls, Translate Offline in 50+ Languages
+  links:
+    - label: Download on the App Store
+      url: https://apps.apple.com/us/app/ten-ai-unlimited-private-ai/id6758805128
+    - label: Website
+      url: https://gettenai.com/
+
+- title: Thumka
+  subtitle: Dance to Unlock Apps
+  label: iPhone · Productivity
+  icon: /assets/images/apps/thumka/icon.png
+  screenshots:
+    - /assets/images/apps/thumka/screen-1.jpg
+    - /assets/images/apps/thumka/screen-2.jpg
+    - /assets/images/apps/thumka/screen-3.jpg
+  description: >-
+    Thumka makes you dance for 5 seconds before you can open the apps you chose to lock.
+    Break the doomscroll with a smile.
+  links:
+    - label: Download on the App Store
+      url: https://apps.apple.com/us/app/thumka-dance-to-unlock-apps/id6762419403
+    - label: Website
+      url: https://thumka.app/
+
+- title: iHeartBooks
+  subtitle: Discover Books
+  label: iPhone · Books
+  icon: /assets/images/apps/iheartbooks/icon.png
+  screenshots:
+    - /assets/images/apps/iheartbooks/screen-1.jpg
+    - /assets/images/apps/iheartbooks/screen-2.jpg
+    - /assets/images/apps/iheartbooks/screen-3.jpg
+  description: >-
+    Do you spend hours finding your next read? Let IHeartBooks find the perfect book for YOU! Whether you're
+    diving into your favorite genre or exploring uncharted literary territories, we’ve got you covered.
+  links:
+    - label: Download on the App Store
+      url: https://apps.apple.com/us/app/iheartbooks-discover-books/id6739216435
+    - label: Website
+      url: https://www.iheartbooks.club/
+
+- title: PFA — Personal Finance Agent
+  label: Open source · Desktop
+  image: /assets/images/apps/pfa.png
+  description: >-
+    An on-device AI agent for personal finance. Chat with your bank data using a local LLM.
+    All data stays on your machine.
+  links:
+    - label: View on GitHub
+      url: https://github.com/gauravtendolkar/PFA

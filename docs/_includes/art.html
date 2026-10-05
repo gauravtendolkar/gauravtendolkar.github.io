@@ -1,0 +1,18 @@
+{%- comment -%}
+  Picks the illustration for a post: front matter `image:` wins, then
+  /assets/images/art/<post-slug>.png (or .jpg/.webp), then .svg, then the default scene.
+  Usage: {% include art.html post=page %}
+{%- endcomment -%}
+{%- assign p = include.post -%}
+{%- assign art_src = p.image -%}
+{%- unless art_src -%}
+  {%- assign base = "/assets/images/art/" | append: p.slug -%}
+  {%- assign exts = "png,jpg,webp,svg" | split: "," -%}
+  {%- for ext in exts -%}
+    {%- assign candidate = base | append: "." | append: ext -%}
+    {%- assign hit = site.static_files | where: "path", candidate | first -%}
+    {%- if hit -%}{%- assign art_src = candidate -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+{%- unless art_src -%}{%- assign art_src = "/assets/images/art/default.svg" -%}{%- endunless -%}
+<img class="art" src="{{ art_src | relative_url }}" alt="" loading="lazy">

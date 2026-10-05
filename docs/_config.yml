@@ -21,24 +21,37 @@
 markdown: kramdown
 mathjax: true
 
-title: Gaurav T.
+title: Gaurav Tendolkar
+author: Gaurav Tendolkar
 email: 
 description: 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://gauravtendolkar.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 
 github_username:  gauravtendolkar
+repository: gauravtendolkar/gauravtendolkar.github.io
 
 show_excerpts: true
 
-# Build settings
-theme: minima
+# Build settings (the theme lives in _layouts, _includes and assets/css)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-pages: 
-header_pages: 
+# Top navigation
+nav:
+  - title: Blog
+    url: /
+  - title: Books
+    url: /books/
+  - title: Apps
+    url: /apps/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .jekyll-cache
 
 # Exclude from processing.
 # The following items will not be processed, by default.

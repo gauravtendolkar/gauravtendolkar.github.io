@@ -1,11 +1,15 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-
-  <div class="wrapper">
-    <div class="footer-col footer-col-1">
-      {%- include social.html -%}
-    </div>
-
+<footer class="site-footer">
+  <div class="page-wrapper site-footer__inner">
+    <a class="wordmark wordmark--footer" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
+    <nav class="site-footer__nav" aria-label="Footer">
+      {%- for item in site.nav -%}
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- endfor -%}
+      {%- if site.github_username -%}
+        <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+      {%- endif -%}
+      <a href="{{ "/feed.xml" | relative_url }}">RSS</a>
+    </nav>
+    <p class="site-footer__copy">&copy; {{ site.time | date: "%Y" }} {{ site.author }}</p>
   </div>
-
 </footer>

@@ -1,0 +1,43 @@
+---
+layout: default
+title: Books
+permalink: /books/
+---
+<div class="page-wrapper">
+  <header class="section-hero">
+    <div>
+      <a class="back-link" href="{{ "/" | relative_url }}">
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M7 3 2 8l5 5M2 8h12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        Back to Blog
+      </a>
+      <h1 class="section-hero__title">Books</h1>
+    </div>
+  </header>
+
+  {%- for book in site.data.books -%}
+  <hr class="rule-subtle">
+  <section class="showcase showcase--book">
+    <div class="showcase__media showcase__media--book">
+      <img src="{{ book.cover | relative_url }}" alt="{{ book.title }} cover">
+    </div>
+    <div class="showcase__body">
+      <p class="eyebrow">Book</p>
+      <h2 class="showcase__title">{{ book.title }}</h2>
+      {%- if book.subtitle -%}<p class="showcase__subtitle">{{ book.subtitle }}</p>{%- endif -%}
+      {%- if book.tagline -%}<p class="showcase__lead">{{ book.tagline }}</p>{%- endif -%}
+      <div class="showcase__text">{{ book.description | markdownify }}</div>
+      <div class="showcase__actions">
+        {%- if book.buy_url -%}
+        <a class="btn btn--dark" href="{{ book.buy_url }}" target="_blank" rel="noopener">{{ book.buy_label | default: "Buy" }}</a>
+        {%- endif -%}
+        {%- if book.website -%}
+        <a class="btn btn--outline" href="{{ book.website }}" target="_blank" rel="noopener">Learn more</a>
+        {%- endif -%}
+        {%- if book.badge -%}
+        <a class="showcase__badge" href="{{ book.badge.url }}" target="_blank" rel="noopener"><img width="72" height="72" src="{{ book.badge.image }}" alt="{{ book.badge.alt }}"></a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+  {%- endfor -%}
+</div>

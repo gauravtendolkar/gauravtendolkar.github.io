@@ -1,76 +1,56 @@
 ---
 layout: default
 ---
+{%- assign live_posts = site.posts | where: "live", true -%}
+{%- assign featured = live_posts | where: "featured", true | first -%}
+{%- if featured == nil -%}{%- assign featured = live_posts | first -%}{%- endif -%}
 
-<div class="home">
-  <div class="flex-container">
-    <div style="margin-right: 30px; min-width: 100px">
-      <img src="/assets/images/pp.jpg" style="border-radius: 50%; width: 100px; height: 100px" />
-    </div>
-    <div>
+<div class="page-wrapper home">
+
+  <section class="home-hero">
+    <h1 class="home-hero__title">
       Welcome to my personal website. I currently work at Microsoft building AI features for <a
-        href="https://designer.microsoft.com" target="_blank">Microsoft Designer</a>.
+        href="https://designer.microsoft.com" target="_blank" rel="noopener">Microsoft Designer</a>.
+    </h1>
+    <img class="home-hero__avatar" src="{{ "/assets/images/pp.jpg" | relative_url }}" alt="{{ site.author }}" width="96" height="96">
+  </section>
+
+  <hr class="rule-strong">
+
+  {%- if featured -%}
+  <section class="featured">
+    <a class="featured__art" href="{{ featured.url | relative_url }}" tabindex="-1" aria-hidden="true">
+      {%- include art.html post=featured -%}
+    </a>
+    <div class="featured__body">
+      <p class="eyebrow">Featured</p>
+      <h2 class="featured__title"><a href="{{ featured.url | relative_url }}">{{ featured.title | escape }}</a></h2>
+      <div class="featured__summary">{{ featured.excerpt | strip_html | truncatewords: 45 }}</div>
     </div>
-  </div>
-  <h2 class="post-list-heading" style="margin-top: 30px">Books</h2>
-  <div class="flex-container">
-    <div style="margin-right: 30px; min-width: 100px;">
-      <img src="/assets/images/book.png" style="width: 80%" />
-    </div>
-    <div>
-      <div>
-        Eight brief, jargon-free lessons for a strong computer science
-        foundation.
-        <br />
-        <br />
-        <i>How does an inanimate machine, essentially a rock, understand our commands? How do billions of such machines
-        seamlessly communicate with each other? And they are achieving human-like intelligence?</i> Understand the internal
-        workings of everything - from computer hardware to AI!
-      </div>
-      <br />
-      <div class="flex-container">
-        <div style="margin-right: 20px"><a href="https://bookraid.com/categories/24/general-non-fiction" target="_blank" rel="noopener"><img width="80px" height="80px" src="https://bookraid.com/badges/general_non_fiction.png" alt="General Non-Fiction Bestseller on BookRaid" /></a></div>
-        <button class="action-button" role="button" onclick="window.open('https://amazon.com/dp/B0D2RZJCN8','_blank')">
-          Buy on Amazon for $2.99
-        </button>
-      </div>
-    </div>
-  </div>
+  </section>
+  {%- endif -%}
 
   {%- if site.posts.size > 0 -%}
-  <h2 class="post-list-heading" style="margin-top: 30px">
-    {{ page.list_title | default: "Blog Posts" }}
-  </h2>
-
-  {% for category in site.categories %}
-  <div class="flex-container">
-    <div style="margin-right: 30px; min-width: 100px ; max-width: 200px">
-      <h3>{{ category | first | replace: "-"," " }} Series</h3>
+  {%- for category in site.categories -%}
+  {%- assign posts = category.last | sort: "title" -%}
+  <section class="series" id="{{ category | first | slugify }}">
+    <div class="series__label">
+      <h2 class="series__name">{{ category | first | replace: "-"," " }} Series</h2>
     </div>
-    <div>
-      <ul class="post-list">
-        {% assign posts = category.last | sort: "title" %}
-        {%- for post in posts -%}
-        <li>
-          <span class="post-meta">{{ post.posted }}</span>
-          <h3>
-            {%- if post.live == true -%}
-            <a class="post-link" href="{{ post.url | relative_url }}">
-              {{ post.title | escape }}
-            </a>
-            {%- else -%}
-            <a class="post-link disabled" href="">
-              {{ post.title | escape }}
-            </a>
-            {%- endif -%}
-          </h3>
-          {%- if site.show_excerpts -%} {{ post.excerpt | truncate(150) }} {%- endif -%}
-        </li>
-        {%- endfor -%}
-      </ul>
-    </div>
-  </div>
+    <ul class="post-rows">
+      {%- for post in posts -%}
+      <li class="post-row{% unless post.live == true %} is-upcoming{% endunless %}">
+        {%- if post.live == true -%}
+        <a class="post-row__title" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        {%- else -%}
+        <span class="post-row__title">{{ post.title | escape }}</span>
+        {%- endif -%}
+        <span class="post-row__date">{{ post.posted }}</span>
+      </li>
+      {%- endfor -%}
+    </ul>
+  </section>
   {%- endfor -%}
-
   {%- endif -%}
+
 </div>
