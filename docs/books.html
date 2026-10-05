@@ -2,9 +2,10 @@
 layout: default
 title: Books
 permalink: /books/
+art: /assets/images/art/books/hero.svg
 ---
 <div class="page-wrapper">
-  <header class="section-hero">
+  <header class="section-hero books-hero">
     <div>
       <a class="back-link" href="{{ "/" | relative_url }}">
         <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M7 3 2 8l5 5M2 8h12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -12,6 +13,7 @@ permalink: /books/
       </a>
       <h1 class="section-hero__title">Books</h1>
     </div>
+    {%- if page.art -%}<img class="art books-hero__art" src="{{ page.art | relative_url }}" alt="" width="240" height="240">{%- endif -%}
   </header>
 
   {%- for book in site.data.books -%}
