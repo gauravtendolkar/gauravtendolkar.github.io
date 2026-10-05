@@ -16,7 +16,7 @@ permalink: /books/
 
   {%- for book in site.data.books -%}
   <hr class="rule-subtle">
-  <section class="showcase showcase--book">
+  <section class="showcase showcase--book" id="{{ book.title | slugify }}">
     <div class="showcase__media showcase__media--book">
       <img src="{{ book.cover | relative_url }}" alt="{{ book.title }} cover">
     </div>
@@ -25,7 +25,10 @@ permalink: /books/
       <h2 class="showcase__title">{{ book.title }}</h2>
       {%- if book.subtitle -%}<p class="showcase__subtitle">{{ book.subtitle }}</p>{%- endif -%}
       {%- if book.tagline -%}<p class="showcase__lead">{{ book.tagline }}</p>{%- endif -%}
-      <div class="showcase__text">{{ book.description | markdownify }}</div>
+      <div class="showcase__text">
+        {{ book.description | markdownify }}
+        {%- if book.audience -%}{{ book.audience | markdownify }}{%- endif -%}
+      </div>
       <div class="showcase__actions">
         {%- if book.buy_url -%}
         <a class="btn btn--dark" href="{{ book.buy_url }}" target="_blank" rel="noopener">{{ book.buy_label | default: "Buy" }}</a>
@@ -37,7 +40,75 @@ permalink: /books/
         <a class="showcase__badge" href="{{ book.badge.url }}" target="_blank" rel="noopener"><img width="72" height="72" src="{{ book.badge.image }}" alt="{{ book.badge.alt }}"></a>
         {%- endif -%}
       </div>
+      {%- if book.buy_note -%}<p class="showcase__note">{{ book.buy_note }}</p>{%- endif -%}
     </div>
   </section>
+
+  {%- if book.sections or book.toc_images -%}
+  <hr class="rule-subtle">
+  <section class="showcase showcase--app">
+    <div class="showcase__media">
+      {%- if book.toc_images -%}
+      <div class="phones phones--pages">
+        {%- for page in book.toc_images -%}
+        <a class="page" href="{{ page | relative_url }}" target="_blank" rel="noopener"><img src="{{ page | relative_url }}" alt="Table of Contents {{ forloop.index }}" loading="lazy"></a>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+    <div class="showcase__body">
+      <p class="eyebrow">Table of Contents</p>
+      {%- if book.sections_intro -%}<h2 class="showcase__title">{{ book.sections_intro }}</h2>{%- endif -%}
+      {%- if book.sections -%}
+      <div class="book-sections">
+        {%- for section in book.sections -%}
+        <div class="book-sections__item">
+          <h3 class="book-sections__title">{{ section.title }}</h3>
+          <ul class="book-sections__chapters">
+            {%- for chapter in section.chapters -%}<li>{{ chapter }}</li>{%- endfor -%}
+          </ul>
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if book.sample_text -%}
+  <hr class="rule-subtle">
+  <section class="showcase showcase--app showcase--flip">
+    <div class="showcase__media">
+      {%- if book.sample_image -%}
+      <div class="phones phones--pages phones--sample">
+        <a class="page" href="{{ book.sample_image | relative_url }}" target="_blank" rel="noopener"><img src="{{ book.sample_image | relative_url }}" alt="Sample page from {{ book.title }}" loading="lazy"></a>
+      </div>
+      {%- endif -%}
+    </div>
+    <div class="showcase__body">
+      <h2 class="showcase__title">What to Expect?</h2>
+      <div class="showcase__text">{{ book.sample_text | markdownify }}</div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if book.author_bio or book.contact -%}
+  <hr class="rule-subtle">
+  <section class="showcase showcase--book book-author">
+    <div class="showcase__media book-author__media">
+      {%- if book.author_image -%}<img class="book-author__photo" src="{{ book.author_image | relative_url }}" alt="Author's picture" loading="lazy">{%- endif -%}
+    </div>
+    <div class="showcase__body">
+      {%- if book.author_bio -%}
+      <h2 class="showcase__title">About the Author</h2>
+      <div class="showcase__text">{{ book.author_bio | markdownify }}</div>
+      {%- endif -%}
+      {%- if book.contact -%}
+      <h3 class="book-author__ask">Ask Author Questions!</h3>
+      <p class="book-author__contact">{{ book.contact }}</p>
+      {%- endif -%}
+    </div>
+  </section>
+  {%- endif -%}
   {%- endfor -%}
 </div>

@@ -401,6 +401,61 @@ a.post-row__title:hover { color: var(--fg-tertiary); }
 }
 .btn__icon { margin-right: 8px; margin-top: -2px; }
 
+/* Books: book pages on a warm panel (same panel as app screenshots) */
+.showcase__note { margin: 12px 0 0; font-size: 15px; color: var(--fg-tertiary); }
+.phones--pages { gap: 0; padding: 48px 5% 0; }
+.phones--pages .page {
+  position: relative;
+  flex: 0 0 34%;
+  min-width: 0;
+  margin-left: -12%;
+  display: block;
+  transform: translateY(32px);
+  transition: transform .2s var(--ease);
+}
+.phones--pages .page:first-child { margin-left: 0; }
+.phones--pages .page:nth-child(even) { transform: translateY(8px); }
+.phones--pages .page:hover { z-index: 1; transform: translateY(-8px); }
+.showcase__media .phones--pages img {
+  border: 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 0 0 1px rgba(20, 20, 19, .06), 0 12px 32px rgba(20, 20, 19, .16);
+}
+.phones--sample .page { flex: 0 0 48%; margin-left: 0; transform: none; }
+.book-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 32px;
+  margin-top: 28px;
+}
+.book-sections__title { margin: 0 0 8px; font-size: 17px; font-weight: 600; }
+.book-sections__chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+}
+.book-author { align-items: center; }
+.book-author__media { max-width: 240px; }
+.showcase__media img.book-author__photo {
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 30% 20%;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+}
+.book-author__ask { margin: 32px 0 4px; font-size: 17px; font-weight: 600; }
+.book-author__contact { margin: 0; font-family: var(--serif); font-size: 18px; }
+@media (max-width: 899px) {
+  .showcase__media--book { max-width: 300px; }
+}
+@media (max-width: 566px) {
+  .book-sections { gap: 24px 20px; }
+  .book-author__media { max-width: 160px; }
+}
+
 /* ---------- Post (article) ---------- */
 .article-grid {
   display: grid;

@@ -79,12 +79,19 @@ content:
       - name: description
         type: text
         description: Markdown supported.
+      - name: audience
+        type: text
+        description: Who the book is for. Markdown supported.
       - name: buy_label
         type: string
       - name: buy_url
         type: string
+      - name: buy_note
+        type: string
+        description: Small note under the buy button, e.g. "$0 for Kindle Unlimited".
       - name: website
         type: string
+        description: Optional "Learn more" link.
       - name: badge
         type: object
         fields:
@@ -94,6 +101,39 @@ content:
             type: string
           - name: alt
             type: string
+      - name: sections_intro
+        label: Table of Contents heading
+        type: string
+      - name: sections
+        label: Sections
+        type: object
+        list: true
+        fields:
+          - name: title
+            type: string
+          - name: chapters
+            type: string
+            list: true
+      - name: toc_images
+        label: Table of Contents pages
+        type: image
+        list: true
+      - name: sample_image
+        label: Sample page
+        type: image
+      - name: sample_text
+        label: What to Expect
+        type: text
+        description: Markdown supported.
+      - name: author_image
+        type: image
+      - name: author_bio
+        label: About the Author
+        type: text
+        description: Markdown supported.
+      - name: contact
+        label: Ask Author Questions
+        type: string
 
   - name: apps
     label: Apps

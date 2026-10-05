@@ -1,16 +1,55 @@
 # Books shown on /books/. Editable from Pages CMS ("Books").
+# Images for Behind the Interface come from its original landing page.
 - title: Behind the Interface
   subtitle: A conceptual guide to the inner workings of computers and their ecosystem
-  cover: /assets/images/book.png
-  tagline: Eight brief, jargon-free lessons for a strong computer science foundation.
+  cover: /assets/images/books/behind-the-interface/cover.jpeg
+  tagline: Eight brief, jargon-free lessons to build a strong computer science foundation
   description: >-
-    *How does an inanimate machine, essentially a rock, understand our commands? How do billions of such machines
-    seamlessly communicate with each other? And they are achieving human-like intelligence?* Understand the internal
-    workings of everything - from computer hardware to AI!
-  buy_label: Buy on Amazon for $2.99
-  buy_url: https://amazon.com/dp/B0D2RZJCN8
-  website: https://gauravtendolkar.github.io/BehindTheInterface/
+    From electronic hardware to AI!
+  audience: >-
+    Whether you are curious kid exploring the world of computing or a
+    seasoned professional who just wants a deeper understanding.
+  buy_label: Buy with Amazon - $2.99!
+  buy_url: https://www.amazon.com/dp/B0D2RZJCN8
+  buy_note: $0 for Kindle Unlimited
   badge:
     image: https://bookraid.com/badges/general_non_fiction.png
     url: https://bookraid.com/categories/24/general-non-fiction
     alt: General Non-Fiction Bestseller on BookRaid
+  sections_intro: Four sections, with two chapters in each
+  sections:
+    - title: Computers
+      chapters:
+        - A Computer’s Architecture
+        - Computer Hardware
+    - title: Software
+      chapters:
+        - Operating Systems
+        - Programming Languages
+    - title: Computer Networks
+      chapters:
+        - The Internet
+        - World Wide Web
+    - title: Data
+      chapters:
+        - Data Storage
+        - Machine Learning
+  toc_images:
+    - /assets/images/books/behind-the-interface/toc1.jpg
+    - /assets/images/books/behind-the-interface/toc2.jpg
+    - /assets/images/books/behind-the-interface/toc3.jpg
+    - /assets/images/books/behind-the-interface/toc4.jpg
+  sample_image: /assets/images/books/behind-the-interface/sample1.jpeg
+  sample_text: >-
+    In each chapter, you will learn the fundamentals behind a
+    technology, in a clear and accessible language. Analogies and
+    historical perspectives will guide your journey. By the end of each
+    chapter, you should have a concrete understanding of the inner
+    workings of that technology.
+  author_image: /assets/images/books/behind-the-interface/pp.png
+  author_bio: >-
+    Gaurav Tendolkar has a decade of experience shipping various
+    software and machine learning projects at enterprise-scale companies
+    like Microsoft, Apple, Nationwide Mutual Insurance Company and
+    JPMorgan Chase & Co.
+  contact: behindtheinterface at gmail dot com
