@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "5. Multi GPU Training"
-posted: "June 20, 2024"
+posted: "Coming Soon..."
 categories: Super-Fast-LLM-Training
-live: true
+live: false
 ---
 In previous posts, we optimised the training loop and the model architecture for a single GPU. With gradient accumulation, mixed precision, asynchronous I/O and `torch.compile`, we could train a GPT-2-small sized model on one GPU with memory to spare. But one GPU will only take us so far.
 
