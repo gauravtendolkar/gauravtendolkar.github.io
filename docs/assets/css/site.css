@@ -407,6 +407,7 @@ a.post-row__title:hover { color: var(--fg-tertiary); }
   grid-template-columns: 1fr;
   gap: 24px;
 }
+.article-grid > * { min-width: 0; }
 @media (min-width: 800px) {
   .article-grid { grid-template-columns: minmax(200px, 300px) 1fr; gap: 64px; }
 }
@@ -521,6 +522,54 @@ a.post-row__title:hover { color: var(--fg-tertiary); }
 }
 .post-content th, .post-content td { padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); text-align: left; vertical-align: top; }
 .post-content th { font-weight: 600; border-bottom-color: var(--fg); }
+
+/* Pseudo-code algorithm blocks used by math-heavy posts */
+.post-content .algorithm-box {
+  margin: 1.6em 0 2em;
+  padding: 18px 22px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.45;
+  overflow-x: auto;
+}
+.post-content .algorithm-caption {
+  margin: 0 0 .65rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-weight: 600;
+}
+.post-content .algorithm-line {
+  margin: .22rem 0;
+  color: var(--fg-secondary);
+}
+.post-content .algorithm-line strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.post-content .algorithm-line.indent-1 { padding-left: 1.4rem; }
+.post-content .algorithm-line.indent-2 { padding-left: 2.8rem; }
+.post-content .algorithm-formula {
+  line-height: 1.35;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 566px) {
+  .post-content .algorithm-box {
+    margin-left: calc(-1 * var(--page-margins));
+    margin-right: calc(-1 * var(--page-margins));
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    padding: 16px var(--page-margins) 18px;
+    font-size: 15px;
+  }
+  .post-content .algorithm-line.indent-1 { padding-left: 1rem; }
+  .post-content .algorithm-line.indent-2 { padding-left: 2rem; }
+}
 
 /* Callouts used in posts: <div class="callout"> */
 .callout {
