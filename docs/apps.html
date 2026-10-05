@@ -2,7 +2,6 @@
 layout: default
 title: Apps
 permalink: /apps/
-art: /assets/images/art/apps/hero.svg
 ---
 <div class="page-wrapper">
   <header class="section-hero apps-hero">
@@ -13,7 +12,6 @@ art: /assets/images/art/apps/hero.svg
       </a>
       <h1 class="section-hero__title">Apps</h1>
     </div>
-    {%- if page.art -%}<img class="art apps-hero__art" src="{{ page.art | relative_url }}" alt="" width="240" height="240">{%- endif -%}
   </header>
 
   {%- for app in site.data.apps -%}
