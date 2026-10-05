@@ -158,12 +158,42 @@ content:
         description: Up to 3 phone screenshots are shown. If none, `image` is used.
       - name: image
         type: image
+      - name: art
+        label: Illustration
+        type: image
+        description: Small hand-drawn scene shown above the title (SVGs live in /assets/images/art/apps/).
       - name: description
         type: text
         description: Markdown supported.
+      - name: app_store
+        label: App Store
+        type: object
+        description: Shows the "Download on the App Store" badge and the live App Store rating.
+        fields:
+          - name: id
+            label: App ID
+            type: string
+            description: 'The number after "id" in the App Store URL, e.g. 6758805128.'
+          - name: url
+            label: App Store URL
+            type: string
+      - name: rating
+        label: Fallback rating
+        type: object
+        description: Shown if the live App Store rating can't be loaded. Count 0 hides the stars.
+        fields:
+          - name: average
+            type: number
+          - name: count
+            type: number
+          - name: as_of
+            label: As of
+            type: date
       - name: links
+        label: Other links
         type: object
         list: true
+        description: Extra buttons for apps not on the App Store (e.g. GitHub).
         fields:
           - name: label
             type: string

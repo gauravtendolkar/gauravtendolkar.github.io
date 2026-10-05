@@ -780,3 +780,35 @@ figure.highlight:hover .copy-btn,
 .site-footer__nav a { color: var(--cloud-medium); text-decoration: none; font-size: 16px; }
 .site-footer__nav a:hover { color: var(--ivory-light); }
 .site-footer__copy { margin: 0; width: 100%; font-size: 14px; color: var(--cloud-dark); }
+
+/* ---------- Apps page: illustrations, App Store badge, ratings ---------- */
+.apps-hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
+@media (min-width: 1024px) { .apps-hero { padding: 48px 0 56px; } }
+.art.apps-hero__art { flex: 0 0 auto; width: 240px; }
+.art.app-art { width: 112px; margin: 0 0 20px; }
+@media (max-width: 566px) {
+  .apps-hero { align-items: center; }
+  .art.apps-hero__art { width: 128px; }
+  .art.app-art { width: 88px; }
+}
+.app-store-badge { display: inline-flex; margin-right: 8px; border-radius: 9px; transition: opacity .15s var(--ease); }
+.app-store-badge:hover { opacity: .82; }
+.showcase__actions .app-store-badge img { display: block; width: auto; height: 48px; border: 0; border-radius: 0; }
+.app-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 15px;
+  color: var(--fg-tertiary);
+  white-space: nowrap;
+}
+.app-rating[hidden] { display: none; }
+.app-rating__stars {
+  width: 98px;
+  height: 18px;
+  background: linear-gradient(90deg, var(--fg) var(--rating, 0%), var(--cloud-light) 0);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath d='M12 1.8l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.6l-6.2 3.3L7 14l-5-4.9 6.9-1z'/%3E%3C/svg%3E") 0 0 / 20px 18px repeat-x;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath d='M12 1.8l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.6l-6.2 3.3L7 14l-5-4.9 6.9-1z'/%3E%3C/svg%3E") 0 0 / 20px 18px repeat-x;
+}
+.app-rating__value { font-weight: 600; color: var(--fg); }
