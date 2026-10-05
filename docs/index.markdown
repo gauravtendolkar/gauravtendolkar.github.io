@@ -4,5 +4,5 @@
 
 layout: home
 
-content: Welcome to my personal website. I am principal applied science manager at Microsoft building AI agents for Copilot in Office Apps.
+content: Welcome to my personal website. I am a principal applied science manager at Microsoft building AI agents for Copilot in Office Apps.
 ---
