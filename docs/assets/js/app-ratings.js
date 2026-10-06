@@ -28,8 +28,7 @@
       var stars = n.querySelector(".app-rating__stars");
       stars.style.setProperty("--rating", (avg / 5 * 100) + "%");
       stars.setAttribute("aria-label", "Rated " + shown + " out of 5 on the App Store");
-      n.querySelector(".app-rating__value").textContent = shown;
-      n.querySelector(".app-rating__count").textContent = count.toLocaleString("en-US") + (count === 1 ? " rating" : " ratings");
+      n.querySelector(".app-rating__value").textContent = shown;
       n.setAttribute("data-rating-source", "live");
       n.hidden = false;
     });

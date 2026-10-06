@@ -31,7 +31,6 @@ permalink: /apps/
       {%- endif -%}
     </div>
     <div class="showcase__body">
-      {%- if app.art -%}<img class="art app-art" src="{{ app.art | relative_url }}" alt="" width="112" height="112" loading="lazy">{%- endif -%}
       <div class="app-head">
         {%- if app.icon -%}<img class="app-icon" src="{{ app.icon | relative_url }}" alt="" width="64" height="64">{%- endif -%}
         <div>
@@ -54,7 +53,6 @@ permalink: /apps/
         <p class="app-rating" data-app-store-id="{{ app.app_store.id }}"{% if r_count == 0 %} hidden{% endif %}>
           <span class="app-rating__stars" style="--rating: {{ r_avg | times: 20 }}%" role="img" aria-label="Rated {{ r_avg | round: 1 }} out of 5 on the App Store"></span>
           <span class="app-rating__value">{{ r_avg | round: 1 }}</span>
-          <span class="app-rating__count">{{ r_count }} {% if r_count == 1 %}rating{% else %}ratings{% endif %}</span>
 
         </p>
         {%- endif -%}
