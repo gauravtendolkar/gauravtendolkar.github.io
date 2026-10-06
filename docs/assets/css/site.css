@@ -502,7 +502,6 @@ a.post-row__title:hover { color: var(--fg-tertiary); }
 .article-hero__kicker:hover { color: var(--fg-tertiary); }
 .article-hero__top { align-items: start; padding-bottom: 40px; }
 .article-hero__art { max-width: 300px; }
-@media (max-width: 799.98px) { .article-hero__spacer { display: none; } }
 .article-hero__title {
   margin: 0;
   font-size: var(--h-featured);

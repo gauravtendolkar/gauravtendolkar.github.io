@@ -24,7 +24,9 @@ layout: default
     {%- endif -%}
 
     <div class="article-grid article-hero__top">
-      <div class="article-hero__spacer"></div>
+      <div class="article-hero__art">
+        {%- include art.html post=page -%}
+      </div>
       <h1 class="article-hero__title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
     </div>
 
