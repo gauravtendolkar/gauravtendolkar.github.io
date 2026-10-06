@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "5. Multi GPU Training"
+title: "5. Multi GPU Distributed Training"
 posted: "June 20, 2024"
 categories: Super-Fast-LLM-Training
 live: true
