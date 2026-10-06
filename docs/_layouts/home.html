@@ -31,11 +31,21 @@ layout: default
   {%- endif -%}
 
   {%- if site.posts.size > 0 -%}
-  {%- for category in site.categories -%}
-  {%- assign posts = category.last | sort: "title" -%}
-  <section class="series" id="{{ category | first | slugify }}">
+  {%- comment -%} Series ordered by their most recent post, newest first. {%- endcomment -%}
+  {%- assign series_csv = "," -%}
+  {%- for p in site.posts -%}
+  {%- for c in p.categories -%}
+  {%- capture series_key -%},{{ c }},{%- endcapture -%}
+  {%- unless series_csv contains series_key -%}{%- assign series_csv = series_csv | append: c | append: "," -%}{%- endunless -%}
+  {%- endfor -%}
+  {%- endfor -%}
+  {%- assign series_names = series_csv | split: "," -%}
+  {%- for series_name in series_names -%}
+  {%- if series_name == "" -%}{%- continue -%}{%- endif -%}
+  {%- assign posts = site.categories[series_name] | sort: "title" -%}
+  <section class="series" id="{{ series_name | slugify }}">
     <div class="series__label">
-      <h2 class="series__name">{{ category | first | replace: "-"," " }} Series</h2>
+      <h2 class="series__name">{{ series_name | replace: "-"," " }} Series</h2>
     </div>
     <ul class="post-rows">
       {%- for post in posts -%}
